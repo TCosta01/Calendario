@@ -1,17 +1,20 @@
 // src/main/java/com/example/reservascalendario/ui/CadastroActivity.kt
 package com.example.reservascalendario.ui
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.calendario.data.DatabaseHelper
 import com.example.calendario.databinding.ActivityCadastroBinding
-import com.example.reservascalendario.data.DatabaseHelper
+// import com.example.calendario.data.DatabaseHelper
 import com.example.reservascalendario.data.Reserva
-import com.example.reservascalendario.databinding.ActivityCadastroBinding
+// import com.example.reservascalendario.databinding.ActivityCadastroBinding
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
@@ -29,6 +32,7 @@ class CadastroActivity : AppCompatActivity() {
     private var originalDateForUpdate: LocalDate? = null
     private var newDateForUpdate: LocalDate? = null
 
+    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCadastroBinding.inflate(layoutInflater)
@@ -60,6 +64,7 @@ class CadastroActivity : AppCompatActivity() {
         setupListeners()
     }
 
+    @SuppressLint("NewApi")
     private fun displaySelectedDates() {
         // Formatar as datas selecionadas para exibição
         val formatter = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy", Locale("pt", "BR"))
@@ -69,6 +74,7 @@ class CadastroActivity : AppCompatActivity() {
         binding.selectedDatesTextView.text = "Datas Selecionadas: $datesText"
     }
 
+    @SuppressLint("NewApi")
     private fun setupUIBasedOnFlow() {
         if (isSingleReservedDateSelected) {
             // Fluxo de ÚNICA DATA RESERVADA (Atualizar/Excluir, e permitir Alterar Data)
@@ -124,6 +130,7 @@ class CadastroActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("NewApi")
     private fun setupListeners() {
         binding.buttonInserir.setOnClickListener {
             insertReservas()
@@ -146,6 +153,7 @@ class CadastroActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun showDatePicker() {
         val calendar = Calendar.getInstance().apply {
             newDateForUpdate?.let {
@@ -186,6 +194,7 @@ class CadastroActivity : AppCompatActivity() {
     }
 
 
+    @SuppressLint("NewApi")
     private fun insertReservas() {
         val nome = binding.editTextNome.text.toString().trim()
         val numero = binding.editTextNumero.text.toString().trim()
@@ -223,6 +232,7 @@ class CadastroActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("NewApi")
     private fun updateMultipleReservas() {
         val nome = binding.editTextNome.text.toString().trim()
         val numero = binding.editTextNumero.text.toString().trim()
@@ -262,6 +272,7 @@ class CadastroActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("NewApi")
     private fun updateSingleReservaWithDateChange() {
         val nome = binding.editTextNome.text.toString().trim()
         val numero = binding.editTextNumero.text.toString().trim()
@@ -323,6 +334,7 @@ class CadastroActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("NewApi")
     private fun deleteReservas() {
         // Excluir todas as datas selecionadas
         val rowsAffected = databaseHelper.deleteReservasByDates(selectedDates)

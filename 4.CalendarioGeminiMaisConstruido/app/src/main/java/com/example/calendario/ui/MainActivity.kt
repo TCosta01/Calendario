@@ -3,14 +3,18 @@ package com.example.calendario.ui
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.reservascalendario.data.DatabaseHelper
-import com.example.reservascalendario.databinding.ActivityMainBinding
+// import com.example.calendario.databinding.ActivityMainBinding
+import com.example.calendario.data.DatabaseHelper
+import com.example.calendario.databinding.ActivityMainBinding
+import com.example.reservascalendario.ui.CadastroActivity
 import com.example.reservascalendario.ui.CalendarViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -37,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -64,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setupListeners() {
         binding.previousMonthButton.setOnClickListener {
             calendarViewModel.goToPreviousMonth()

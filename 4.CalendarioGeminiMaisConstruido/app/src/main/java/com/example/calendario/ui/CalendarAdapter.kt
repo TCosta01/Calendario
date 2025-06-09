@@ -1,10 +1,12 @@
 // src/main/java/com/example/reservascalendario/ui/CalendarAdapter.kt
 package com.example.calendario.ui
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.reservascalendario.databinding.CalendarDayItemBinding
+import com.example.calendario.databinding.CalendarDayItemBinding
+// import com.example.reservascalendario.databinding.CalendarDayItemBinding
 
 class CalendarAdapter(
     private var days: List<CalendarDay>,
@@ -14,6 +16,7 @@ class CalendarAdapter(
     inner class DayViewHolder(private val binding: CalendarDayItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        @SuppressLint("NewApi")
         fun bind(calendarDay: CalendarDay) {
             binding.dayText.text = calendarDay.date?.dayOfMonth?.toString() ?: ""
             binding.dayText.isEnabled = calendarDay.isCurrentMonth // Desabilita dias de outros meses

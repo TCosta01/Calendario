@@ -1,10 +1,14 @@
 // src/main/java/com/example/reservascalendario/data/DatabaseHelper.kt
 package com.example.calendario.data
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.os.Build
+import androidx.annotation.RequiresApi
+import com.example.reservascalendario.data.Reserva
 import java.time.LocalDate
 
 class DatabaseHelper(context: Context) :
@@ -116,6 +120,7 @@ class DatabaseHelper(context: Context) :
      * Obtém todas as datas reservadas no banco de dados.
      * Retorna um conjunto de LocalDate para facilitar a verificação.
      */
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getAllReservedDates(): Set<LocalDate> {
         val reservedDates = mutableSetOf<LocalDate>()
         val db = this.readableDatabase
@@ -169,6 +174,7 @@ class DatabaseHelper(context: Context) :
      * Exclui múltiplas reservas com base em uma lista de datas.
      * Retorna o número total de linhas afetadas.
      */
+    @RequiresApi(Build.VERSION_CODES.O)
     fun deleteReservasByDates(dates: List<LocalDate>): Int {
         val db = this.writableDatabase
         var totalRowsAffected = 0
@@ -196,6 +202,7 @@ class DatabaseHelper(context: Context) :
      * Retorna true se a operação for bem-sucedida, false caso contrário.
      * Lança exceção se a nova data já estiver reservada.
      */
+    @SuppressLint("NewApi")
     fun moveReserva(oldDate: LocalDate, newDate: LocalDate, updatedReserva: Reserva): Boolean {
         val db = this.writableDatabase
         db.beginTransaction()

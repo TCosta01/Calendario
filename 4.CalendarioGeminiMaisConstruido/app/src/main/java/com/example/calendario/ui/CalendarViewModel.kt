@@ -1,7 +1,10 @@
 // src/main/java/com/example/reservascalendario/ui/CalendarViewModel.kt
 package com.example.reservascalendario.ui
 
+import android.annotation.SuppressLint
 import android.app.Application
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,6 +19,7 @@ import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
+@RequiresApi(Build.VERSION_CODES.O)
 class CalendarViewModel(application: Application) : AndroidViewModel(application) {
 
     private val databaseHelper = DatabaseHelper(application)
@@ -48,11 +52,13 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun goToNextMonth() {
         _currentMonth.value = _currentMonth.value?.plusMonths(1)
         generateCalendarDays()
     }
 
+    @SuppressLint("NewApi")
     fun goToPreviousMonth() {
         _currentMonth.value = _currentMonth.value?.minusMonths(1)
         generateCalendarDays()
