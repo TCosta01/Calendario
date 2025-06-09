@@ -1,5 +1,5 @@
 // src/main/java/com/example/reservascalendario/data/DatabaseHelper.kt
-package com.example.reservascalendario.data
+package com.example.calendario.data
 
 import android.content.ContentValues
 import android.content.Context
@@ -12,7 +12,7 @@ class DatabaseHelper(context: Context) :
 
     companion object {
         private const val DATABASE_NAME = "reservas_db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 1 // Mantenha a versão se a lógica de onCreate/onUpgrade for limpa, ou aumente para forçar onUpgrade
         private const val TABLE_RESERVAS = "Reservas"
         private const val COLUMN_DIA = "dia"
         private const val COLUMN_MES = "mes"
@@ -20,6 +20,8 @@ class DatabaseHelper(context: Context) :
         private const val COLUMN_NOME = "nome"
         private const val COLUMN_NUMERO = "numero"
         private const val COLUMN_ENDERECO = "endereco"
+        private const val COLUMN_DESCRICAO = "descricao" // Nova coluna
+        private const val COLUMN_VALOR = "valor"         // Nova coluna
     }
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -30,11 +32,16 @@ class DatabaseHelper(context: Context) :
                 + "$COLUMN_NOME TEXT,"
                 + "$COLUMN_NUMERO TEXT,"
                 + "$COLUMN_ENDERECO TEXT,"
+                + "$COLUMN_DESCRICAO TEXT," // Nova coluna
+                + "$COLUMN_VALOR REAL,"     // Nova coluna (REAL para Double)
                 + "PRIMARY KEY ($COLUMN_DIA, $COLUMN_MES, $COLUMN_ANO))") // Chave primária composta para garantir unicidade da data
         db.execSQL(CREATE_RESERVAS_TABLE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        // Se você tiver usuários com versões antigas do app, precisará de uma lógica de migração
+        // mais robusta aqui (ex: ALTER TABLE ADD COLUMN).
+        // Para este exemplo, estamos simplesmente recriando a tabela, o que apaga os dados existentes.
         db.execSQL("DROP TABLE IF EXISTS $TABLE_RESERVAS")
         onCreate(db)
     }
@@ -42,19 +49,29 @@ class DatabaseHelper(context: Context) :
     // --- Operações CRUD ---
 
     /**
-     * Insere uma nova reserva no banco de dados.
-     * Retorna o ID da linha recém-inserida ou -1 se ocorrer um erro.
+     * Cria ContentValues a partir de um objeto Reserva.
+     * Reutilizado para inserção e atualização.
      */
-    fun insertReserva(reserva: Reserva): Long {
-        val db = this.writableDatabase
-        val values = ContentValues().apply {
+    private fun getContentValues(reserva: Reserva): ContentValues {
+        return ContentValues().apply {
             put(COLUMN_DIA, reserva.dia)
             put(COLUMN_MES, reserva.mes)
             put(COLUMN_ANO, reserva.ano)
             put(COLUMN_NOME, reserva.nome)
             put(COLUMN_NUMERO, reserva.numero)
             put(COLUMN_ENDERECO, reserva.endereco)
+            put(COLUMN_DESCRICAO, reserva.descricao)
+            put(COLUMN_VALOR, reserva.valor)
         }
+    }
+
+    /**
+     * Insere uma nova reserva no banco de dados.
+     * Retorna o ID da linha recém-inserida ou -1 se ocorrer um erro.
+     */
+    fun insertReserva(reserva: Reserva): Long {
+        val db = this.writableDatabase
+        val values = getContentValues(reserva)
         val id = db.insert(TABLE_RESERVAS, null, values)
         db.close()
         return id
@@ -68,7 +85,10 @@ class DatabaseHelper(context: Context) :
         val db = this.readableDatabase
         val cursor = db.query(
             TABLE_RESERVAS,
-            arrayOf(COLUMN_DIA, COLUMN_MES, COLUMN_ANO, COLUMN_NOME, COLUMN_NUMERO, COLUMN_ENDERECO),
+            arrayOf(
+                COLUMN_DIA, COLUMN_MES, COLUMN_ANO, COLUMN_NOME,
+                COLUMN_NUMERO, COLUMN_ENDERECO, COLUMN_DESCRICAO, COLUMN_VALOR
+            ),
             "$COLUMN_DIA = ? AND $COLUMN_MES = ? AND $COLUMN_ANO = ?",
             arrayOf(dia.toString(), mes.toString(), ano.toString()),
             null, null, null, null
@@ -83,7 +103,9 @@ class DatabaseHelper(context: Context) :
                 val nome = it.getString(it.getColumnIndexOrThrow(COLUMN_NOME))
                 val numero = it.getString(it.getColumnIndexOrThrow(COLUMN_NUMERO))
                 val endereco = it.getString(it.getColumnIndexOrThrow(COLUMN_ENDERECO))
-                reserva = Reserva(foundDia, foundMes, foundAno, nome, numero, endereco)
+                val descricao = it.getString(it.getColumnIndexOrThrow(COLUMN_DESCRICAO))
+                val valor = it.getDouble(it.getColumnIndexOrThrow(COLUMN_VALOR))
+                reserva = Reserva(foundDia, foundMes, foundAno, nome, numero, endereco, descricao, valor)
             }
         }
         db.close()
@@ -112,16 +134,12 @@ class DatabaseHelper(context: Context) :
     }
 
     /**
-     * Atualiza uma reserva existente no banco de dados.
+     * Atualiza uma reserva existente no banco de dados com base na data.
      * Retorna o número de linhas afetadas.
      */
     fun updateReserva(reserva: Reserva): Int {
         val db = this.writableDatabase
-        val values = ContentValues().apply {
-            put(COLUMN_NOME, reserva.nome)
-            put(COLUMN_NUMERO, reserva.numero)
-            put(COLUMN_ENDERECO, reserva.endereco)
-        }
+        val values = getContentValues(reserva)
         val rowsAffected = db.update(
             TABLE_RESERVAS,
             values,
@@ -170,5 +188,51 @@ class DatabaseHelper(context: Context) :
             db.close()
         }
         return totalRowsAffected
+    }
+
+    /**
+     * Move uma reserva de uma data antiga para uma nova data,
+     * atualizando também seus detalhes.
+     * Retorna true se a operação for bem-sucedida, false caso contrário.
+     * Lança exceção se a nova data já estiver reservada.
+     */
+    fun moveReserva(oldDate: LocalDate, newDate: LocalDate, updatedReserva: Reserva): Boolean {
+        val db = this.writableDatabase
+        db.beginTransaction()
+        try {
+            // 1. Verificar se a nova data já está ocupada
+            if (getReservaByDate(newDate.dayOfMonth, newDate.monthValue, newDate.year) != null) {
+                throw IllegalStateException("A nova data ${newDate.dayOfMonth}/${newDate.monthValue}/${newDate.year} já está reservada.")
+            }
+
+            // 2. Excluir a reserva antiga
+            val deletedRows = db.delete(
+                TABLE_RESERVAS,
+                "$COLUMN_DIA = ? AND $COLUMN_MES = ? AND $COLUMN_ANO = ?",
+                arrayOf(oldDate.dayOfMonth.toString(), oldDate.monthValue.toString(), oldDate.year.toString())
+            )
+
+            if (deletedRows > 0) {
+                // 3. Inserir a nova reserva com a nova data e os detalhes atualizados
+                val newReserva = updatedReserva.copy(
+                    dia = newDate.dayOfMonth,
+                    mes = newDate.monthValue,
+                    ano = newDate.year
+                )
+                val newId = db.insert(TABLE_RESERVAS, null, getContentValues(newReserva))
+
+                if (newId != -1L) {
+                    db.setTransactionSuccessful()
+                    return true
+                }
+            }
+            return false // Se não conseguiu deletar ou inserir
+        } catch (e: Exception) {
+            // Lidar com exceções (ex: nova data já reservada)
+            throw e
+        } finally {
+            db.endTransaction()
+            db.close()
+        }
     }
 }

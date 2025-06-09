@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Texto branco quando selecionado -->
+    <item android:state_selected="true" android:color="@android:color/white" />
+    <!-- Texto preto quando reservado -->
+    <item android:state_activated="true" android:color="@android:color/white" />
+    <!-- Texto preto para dias do mês atual (não selecionados nem reservados) -->
+    <item android:state_enabled="true" android:color="@android:color/black" />
+    <!-- Texto cinza para dias de meses anteriores/próximos (desabilitados) -->
+    <item android:state_enabled="false" android:color="@android:color/darker_gray" />
+</selector>

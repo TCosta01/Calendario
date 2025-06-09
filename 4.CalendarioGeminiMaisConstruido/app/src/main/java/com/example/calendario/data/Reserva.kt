@@ -1,5 +1,5 @@
 // src/main/java/com/example/reservascalendario/data/Reserva.kt
-package com.example.reservascalendario.data
+package com.example.calendario.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -13,7 +13,9 @@ data class Reserva(
     val ano: Int,
     val nome: String,
     val numero: String,
-    val endereco: String
+    val endereco: String,
+    val descricao: String, // Nova coluna: Descrição da reserva
+    val valor: Double      // Nova coluna: Valor da reserva
 ) : Parcelable {
     // Adiciona uma propriedade para converter a data em LocalDate para facilitar a comparação
     fun toLocalDate(): LocalDate {

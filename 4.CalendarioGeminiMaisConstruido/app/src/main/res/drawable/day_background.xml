@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Estado Reservado (usamos state_activated para isso) -->
+    <item android:state_activated="true">
+        <shape android:shape="oval">
+            <solid android:color="@color/day_reserved_color" />
+            <stroke android:width="2dp" android:color="@color/day_reserved_color" />
+        </shape>
+    </item>
+    <!-- Estado Selecionado -->
+    <item android:state_selected="true">
+        <shape android:shape="oval">
+            <solid android:color="@color/day_selected_color" />
+        </shape>
+    </item>
+    <!-- Estado Pressionado -->
+    <item android:state_pressed="true">
+        <shape android:shape="oval">
+            <solid android:color="#D3D3D3" /> <!-- Cinza claro ao pressionar -->
+        </shape>
+    </item>
+    <!-- Estado Default -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+</selector>
