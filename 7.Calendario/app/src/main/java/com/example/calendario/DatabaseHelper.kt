@@ -1,10 +1,11 @@
-// src/main/java/com/yourpackage/yourapp/DatabaseHelper.kt
-package com.example.calendario // Substitua pelo seu package
+// src/main/java/com/example/calendario/DatabaseHelper.kt
+package com.example.calendario
 
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log // Adicione para logs de debug, se quiser
 
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
@@ -31,8 +32,8 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                 + COLUMN_NUMERO + " TEXT,"
                 + COLUMN_ENDERECO + " TEXT,"
                 + COLUMN_DESCRICAO + " TEXT,"
-                + COLUMN_VALOR + " REAL,"
-                + "PRIMARY KEY (" + COLUMN_DIA + "," + COLUMN_MES + "," + COLUMN_ANO + "))") // Chave primária composta
+                + COLUMN_VALOR + " REAL," // Mude para REAL para Double
+                + "PRIMARY KEY (" + COLUMN_DIA + ", " + COLUMN_MES + ", " + COLUMN_ANO + "))") // Chave primária composta
         db.execSQL(CREATE_RESERVAS_TABLE)
     }
 
@@ -43,7 +44,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     fun insertBooking(booking: Booking): Long {
         val db = this.writableDatabase
-        val contentValues = ContentValues().apply {
+        val values = ContentValues().apply {
             put(COLUMN_DIA, booking.dia)
             put(COLUMN_MES, booking.mes)
             put(COLUMN_ANO, booking.ano)
@@ -53,42 +54,9 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             put(COLUMN_DESCRICAO, booking.descricao)
             put(COLUMN_VALOR, booking.valor)
         }
-        val success = db.insert(TABLE_RESERVAS, null, contentValues)
+        val id = db.insert(TABLE_RESERVAS, null, values)
         db.close()
-        return success
-    }
-
-    fun updateBooking(oldBooking: Booking, newBooking: Booking): Int {
-        val db = this.writableDatabase
-
-        // Primeiro, excluímos as datas antigas
-        val deleteSelection = "$COLUMN_DIA = ? AND $COLUMN_MES = ? AND $COLUMN_ANO = ?"
-        val deleteArgs = arrayOf(oldBooking.dia.toString(), oldBooking.mes.toString(), oldBooking.ano.toString())
-        db.delete(TABLE_RESERVAS, deleteSelection, deleteArgs)
-
-        // Em seguida, inserimos a nova reserva com as novas datas
-        val contentValues = ContentValues().apply {
-            put(COLUMN_DIA, newBooking.dia)
-            put(COLUMN_MES, newBooking.mes)
-            put(COLUMN_ANO, newBooking.ano)
-            put(COLUMN_NOME, newBooking.nome)
-            put(COLUMN_NUMERO, newBooking.numero)
-            put(COLUMN_ENDERECO, newBooking.endereco)
-            put(COLUMN_DESCRICAO, newBooking.descricao)
-            put(COLUMN_VALOR, newBooking.valor)
-        }
-        val success = db.insert(TABLE_RESERVAS, null, contentValues).toInt()
-        db.close()
-        return success
-    }
-
-    fun deleteBooking(day: Int, month: Int, year: Int): Int {
-        val db = this.writableDatabase
-        val selection = "$COLUMN_DIA = ? AND $COLUMN_MES = ? AND $COLUMN_ANO = ?"
-        val selectionArgs = arrayOf(day.toString(), month.toString(), year.toString())
-        val count = db.delete(TABLE_RESERVAS, selection, selectionArgs)
-        db.close()
-        return count
+        return id
     }
 
     fun getAllBookings(): List<Booking> {
@@ -108,7 +76,6 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                     val endereco = it.getString(it.getColumnIndexOrThrow(COLUMN_ENDERECO))
                     val descricao = it.getString(it.getColumnIndexOrThrow(COLUMN_DESCRICAO))
                     val valor = it.getDouble(it.getColumnIndexOrThrow(COLUMN_VALOR))
-
                     val booking = Booking(dia, mes, ano, nome, numero, endereco, descricao, valor)
                     bookingList.add(booking)
                 } while (it.moveToNext())
@@ -141,5 +108,58 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         }
         db.close()
         return booking
+    }
+
+    fun updateBooking(oldBooking: Booking, newBooking: Booking): Int {
+        val db = this.writableDatabase
+        db.beginTransaction()
+        var rowsAffected = 0
+        try {
+            // Tenta excluir a reserva antiga com base na chave primária
+            val deleteRows = db.delete(
+                TABLE_RESERVAS,
+                "$COLUMN_DIA = ? AND $COLUMN_MES = ? AND $COLUMN_ANO = ?",
+                arrayOf(oldBooking.dia.toString(), oldBooking.mes.toString(), oldBooking.ano.toString())
+            )
+            // Log.d("DatabaseHelper", "Deleted rows: $deleteRows for ${oldBooking.dia}/${oldBooking.mes}/${oldBooking.ano}")
+
+            // Tenta inserir a nova reserva (que pode ter os mesmos dados, mas com o "upsert" de delete+insert)
+            val values = ContentValues().apply {
+                put(COLUMN_DIA, newBooking.dia)
+                put(COLUMN_MES, newBooking.mes)
+                put(COLUMN_ANO, newBooking.ano)
+                put(COLUMN_NOME, newBooking.nome)
+                put(COLUMN_NUMERO, newBooking.numero)
+                put(COLUMN_ENDERECO, newBooking.endereco)
+                put(COLUMN_DESCRICAO, newBooking.descricao)
+                put(COLUMN_VALOR, newBooking.valor)
+            }
+            val newRowId = db.insert(TABLE_RESERVAS, null, values)
+            // Log.d("DatabaseHelper", "Inserted new row ID: $newRowId for ${newBooking.dia}/${newBooking.mes}/${newBooking.ano}")
+
+            if (newRowId != -1L) { // Se a inserção foi bem-sucedida, consideramos a operação como bem-sucedida
+                rowsAffected = 1
+            }
+
+            db.setTransactionSuccessful()
+        } catch (e: Exception) {
+            Log.e("DatabaseHelper", "Error during updateBooking transaction: ${e.message}", e)
+            rowsAffected = 0
+        } finally {
+            db.endTransaction()
+            db.close()
+        }
+        return rowsAffected
+    }
+
+    fun deleteBooking(day: Int, month: Int, year: Int): Int {
+        val db = this.writableDatabase
+        val rowsAffected = db.delete(
+            TABLE_RESERVAS,
+            "$COLUMN_DIA = ? AND $COLUMN_MES = ? AND $COLUMN_ANO = ?",
+            arrayOf(day.toString(), month.toString(), year.toString())
+        )
+        db.close()
+        return rowsAffected
     }
 }

@@ -1,8 +1,5 @@
-// src/main/java/com/yourpackage/yourapp/MainActivity.kt
-package com.example.calendario // Substitua pelo seu package
-
-// src/main/java/com/yourpackage/yourapp/MainActivity.kt
-
+// src/main/java/com/example/calendario/MainActivity.kt
+package com.example.calendario
 
 import android.content.Intent
 import android.graphics.Color
@@ -24,10 +21,7 @@ class MainActivity : AppCompatActivity(), OnDateSelectedListener {
     private lateinit var doneButton: Button
     private lateinit var databaseHelper: DatabaseHelper
 
-    // Usaremos um Set para armazenar as datas selecionadas para permitir múltiplas seleções
-    // mesmo que a UI do MaterialCalendarView seja configurada para 'single' no XML
-    // Isso é para a lógica de "Done" para novas reservas.
-    private val currentSelectedDates = mutableSetOf<Triple<Int, Int, Int>>() // Triple(dia, mes, ano)
+    private val currentSelectedDates = mutableSetOf<Triple<Int, Int, Int>>() // Armazena as datas selecionadas
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,11 +32,9 @@ class MainActivity : AppCompatActivity(), OnDateSelectedListener {
         doneButton = findViewById(R.id.doneButton)
         databaseHelper = DatabaseHelper(this)
 
-        // Configura o listener para cliques nas datas do calendário
         calendarView.setOnDateChangedListener(this)
 
-        // Inicializa o calendário com as datas reservadas
-        markBookedDates()
+        markBookedDates() // Marca as datas já reservadas do banco de dados
 
         doneButton.setOnClickListener {
             handleDoneButtonClick()
@@ -51,61 +43,54 @@ class MainActivity : AppCompatActivity(), OnDateSelectedListener {
 
     override fun onResume() {
         super.onResume()
-        // Atualiza o calendário sempre que a MainActivity for retomada (após cadastro/edição/exclusão)
+        // Isso é importante para re-renderizar as reservas se algo mudar em BookingActivity
         markBookedDates()
-        currentSelectedDates.clear() // Limpa as datas selecionadas para uma nova interação
+        // Limpa as seleções temporárias ao retornar
+        currentSelectedDates.clear()
         updateSelectedDatesText()
+        // Força a atualização dos decoradores para remover qualquer seleção anterior
+        calendarView.clearSelection() // Limpa a seleção interna da MaterialCalendarView
+        calendarView.invalidateDecorators() // Redesenha os decoradores
     }
 
-    // Implementação da interface OnDateSelectedListener
     override fun onDateSelected(widget: MaterialCalendarView, date: CalendarDay, selected: Boolean) {
-        val selectedDate = Triple(date.day, date.month + 1, date.year) // month is 0-indexed in CalendarDay, so add 1
+        val selectedDateTriple = Triple(date.day, date.month + 1, date.year) // Mês é 0-based no CalendarDay
 
-        if (selected) { // A data foi selecionada (clicada)
-            // Lógica para lidar com o clique em uma data
-            val existingBooking = databaseHelper.getBooking(selectedDate.first, selectedDate.second, selectedDate.third)
-
-            val intent = Intent(this, BookingActivity::class.java).apply {
-                // Sempre passamos a data clicada para a BookingActivity
-                putExtra("selectedDates", arrayListOf(selectedDate)) // Passamos como ArrayList<Triple>
-
-                if (existingBooking != null) {
-                    // Data já reservada, passamos os dados existentes para edição
-                    putExtra("isEditMode", true)
-                    putExtra("bookingData", existingBooking)
-                } else {
-                    // Data não reservada, modo de cadastro
-                    putExtra("isEditMode", false)
-                }
-            }
-            startActivity(intent)
-
-            // Após o clique, desmarca a data no calendário para evitar confusão visual com múltiplas seleções
-            // Opcional, dependendo de como você quer que o "Done" funcione
-            widget.clearSelection()
-            currentSelectedDates.clear()
-            updateSelectedDatesText()
-
-        } else { // A data foi desmarcada (se a seleção múltipla fosse permitida)
-            // Para nosso caso de "single" selectionMode, isso raramente será chamado para desmarcar.
-            // A lógica de clique já lida com o redirecionamento.
-            currentSelectedDates.remove(selectedDate)
-            updateSelectedDatesText()
+        // Alterna o estado da data no nosso conjunto de seleções
+        if (currentSelectedDates.contains(selectedDateTriple)) {
+            currentSelectedDates.remove(selectedDateTriple)
+        } else {
+            currentSelectedDates.add(selectedDateTriple)
         }
+
+        // Limpa a seleção interna da MaterialCalendarView para não interferir
+        // e force a redesenho para aplicar nossos decoradores personalizados
+        widget.clearSelection()
+        widget.invalidateDecorators() // Isso remove todos os decoradores existentes e permite re-aplicá-los
+
+        // Re-aplica o decorador para as datas no currentSelectedDates (as datas que o usuário clicou)
+        val selectedCalendarDays = currentSelectedDates.map { CalendarDay.from(it.third, it.second - 1, it.first) }
+        // Use uma cor diferente para datas selecionadas (não reservadas) se quiser.
+        // Aqui, estou usando a mesma cor, mas você pode definir outra constante.
+        widget.addDecorator(EventDecorator(Color.parseColor("#FFBB86FC"), selectedCalendarDays))
+
+        // Adiciona novamente os decoradores para as datas JÁ RESERVADAS (para não perdê-los)
+        markBookedDates()
+
+        updateSelectedDatesText() // Atualiza o texto das datas selecionadas
     }
 
     private fun markBookedDates() {
-        calendarView.removeDecorators() // Remove decoradores anteriores para evitar duplicação
-        val bookedDates = databaseHelper.getAllBookings()
-        val calendarDays = bookedDates.map { CalendarDay.from(it.ano, it.mes -1, it.dia) } // month is 0-indexed in CalendarDay
+        calendarView.removeDecorators() // Remove todos os decoradores existentes para evitar duplicação
 
-        // Adiciona o decorador para as datas reservadas
-        calendarView.addDecorator(EventDecorator(Color.parseColor("#FFBB86FC"), calendarDays)) // Use sua cor preferida
+        val bookedDates = databaseHelper.getAllBookings()
+        val calendarDays = bookedDates.map { CalendarDay.from(it.ano, it.mes - 1, it.dia) }
+
+        // Aplica o decorador para as datas que já estão reservadas
+        calendarView.addDecorator(EventDecorator(Color.parseColor("#FFBB86FC"), calendarDays))
     }
 
     private fun updateSelectedDatesText() {
-        // No cenário de clique em datas, o TextView abaixo não será tão relevante para múltiplas seleções
-        // pois a lógica de clique já redireciona. Ele é mais para quando o "Done" for acionado.
         if (currentSelectedDates.isEmpty()) {
             selectedDatesTextView.text = "Datas selecionadas: Nenhuma"
         } else {
@@ -116,34 +101,16 @@ class MainActivity : AppCompatActivity(), OnDateSelectedListener {
     }
 
     private fun handleDoneButtonClick() {
-        // Esta lógica de "Done" agora será para quando o usuário **não clicou em uma data específica**,
-        // mas quer iniciar uma nova reserva para uma data que ele talvez tenha "selecionado" manualmente
-        // (embora a MaterialCalendarView em modo single desmarque a anterior).
-        // Se a sua intenção é que o usuário clique em múltiplos dias e depois aperte Done,
-        // você precisaria mudar o `app:mcv_selectionMode` para `multiple` e ajustar a lógica de `onDateSelected`
-        // para adicionar/remover datas do `currentSelectedDates`.
-
         if (currentSelectedDates.isEmpty()) {
             Toast.makeText(this, "Por favor, selecione uma data para reservar.", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Assume que o botão Done é para iniciar um NOVO cadastro
-        // Mesmo que a MaterialCalendarView esteja em modo single, se o usuário clicou e depois clicou Done,
-        // vamos pegar a última data clicada ou a primeira se houver.
-        val firstSelectedDate = currentSelectedDates.first()
-        val existingBooking = databaseHelper.getBooking(firstSelectedDate.first, firstSelectedDate.second, firstSelectedDate.third)
-
         val intent = Intent(this, BookingActivity::class.java).apply {
-            putExtra("selectedDates", ArrayList(currentSelectedDates)) // Passa todas as datas que foram "selecionadas"
-            if (existingBooking != null) {
-                // Se a data já existe, o "Done" redireciona para edição dessa data
-                putExtra("isEditMode", true)
-                putExtra("bookingData", existingBooking)
-            } else {
-                // Se não existe, redireciona para cadastro
-                putExtra("isEditMode", false)
-            }
+            // Passa todas as datas selecionadas para a BookingActivity
+            putExtra("selectedDates", ArrayList(currentSelectedDates))
+            // isEditMode agora é tratado dentro da BookingActivity com base nas datas.
+            putExtra("isEditMode", false) // Assume que é uma tentativa de nova reserva para as datas selecionadas
         }
         startActivity(intent)
     }

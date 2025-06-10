@@ -1,13 +1,13 @@
-// src/main/java/com/yourpackage/yourapp/BookingActivity.kt
-package com.example.calendario // Substitua pelo seu package
+// src/main/java/com/example/calendario/BookingActivity.kt
+package com.example.calendario
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
-import java.util.*
 import kotlin.collections.ArrayList
 
 class BookingActivity : AppCompatActivity() {
@@ -22,8 +22,8 @@ class BookingActivity : AppCompatActivity() {
     private lateinit var deleteButton: Button
 
     private lateinit var databaseHelper: DatabaseHelper
-    private var isEditMode: Boolean = false
-    private var existingBooking: Booking? = null
+    private var isEditMode: Boolean = false // Reavaliar o uso exato com múltiplas datas
+    private var existingBooking: Booking? = null // Pode ser menos relevante com múltiplas datas
     private lateinit var selectedDates: ArrayList<Triple<Int, Int, Int>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,143 +41,119 @@ class BookingActivity : AppCompatActivity() {
 
         databaseHelper = DatabaseHelper(this)
 
-        isEditMode = intent.getBooleanExtra("isEditMode", false)
-        selectedDates = intent.getSerializableExtra("selectedDates") as ArrayList<Triple<Int, Int, Int>>
+        selectedDates = intent.getSerializableExtra("selectedDates") as? ArrayList<Triple<Int, Int, Int>>
+            ?: arrayListOf()
 
-        updateBookingDatesText()
+        isEditMode = intent.getBooleanExtra("isEditMode", false) // Mantido, mas sua lógica é adaptada
 
-        if (isEditMode) {
-            existingBooking = intent.getSerializableExtra("bookingData") as? Booking
+        // Exibir todas as datas selecionadas
+        val datesText = selectedDates.sortedWith(compareBy({ it.third }, { it.second }, { it.first }))
+            .joinToString(", ") { "${it.first}/${it.second}/${it.third}" }
+        bookingDatesTextView.text = "Datas da Reserva: $datesText"
+
+        // Lógica de preenchimento (se for uma "edição" ou nova inserção)
+        // Se houver apenas uma data selecionada e ela já tiver uma reserva, preenche os campos.
+        // Caso contrário, assume que é uma nova inserção para as datas.
+        if (selectedDates.size == 1) {
+            val singleSelectedDate = selectedDates.first()
+            existingBooking = databaseHelper.getBooking(singleSelectedDate.first, singleSelectedDate.second, singleSelectedDate.third)
             existingBooking?.let {
                 nameEditText.setText(it.nome)
                 numberEditText.setText(it.numero)
                 addressEditText.setText(it.endereco)
                 descriptionEditText.setText(it.descricao)
                 valueEditText.setText(it.valor.toString())
+                actionButton.text = "Atualizar Reserva"
+                deleteButton.visibility = View.VISIBLE
+                isEditMode = true // Confirma o modo de edição para uma única data
+            } ?: run {
+                actionButton.text = "Inserir Reservas"
+                deleteButton.visibility = View.GONE
+                isEditMode = false // É uma nova reserva, mesmo que seja apenas uma data
             }
-            actionButton.text = "Atualizar Reserva"
-            deleteButton.visibility = Button.VISIBLE
         } else {
-            actionButton.text = "Inserir Reserva"
-            deleteButton.visibility = Button.GONE
+            // Múltiplas datas selecionadas ou nenhuma data existente: sempre para inserção/substituição
+            actionButton.text = "Inserir Reservas"
+            deleteButton.visibility = View.GONE
+            isEditMode = false // Desabilita o modo de edição tradicional
         }
 
+
         actionButton.setOnClickListener {
-            if (isEditMode) {
-                updateBooking()
-            } else {
-                insertBooking()
-            }
+            // Lógica para salvar/atualizar múltiplas reservas
+            insertOrUpdateBookings()
         }
 
         deleteButton.setOnClickListener {
-            deleteBooking()
-        }
-    }
-
-    private fun updateBookingDatesText() {
-        if (selectedDates.isEmpty()) {
-            bookingDatesTextView.text = "Datas da Reserva: Nenhuma"
-        } else {
-            val datesText = selectedDates.sortedWith(compareBy({ it.third }, { it.second }, { it.first }))
-                .joinToString(", ") { "${it.first}/${it.second}/${it.third}" }
-            bookingDatesTextView.text = "Datas da Reserva: $datesText"
-        }
-    }
-
-    private fun insertBooking() {
-        val name = nameEditText.text.toString().trim()
-        val number = numberEditText.text.toString().trim()
-        val address = addressEditText.text.toString().trim()
-        val description = descriptionEditText.text.toString().trim()
-        val valueString = valueEditText.text.toString().trim()
-
-        if (name.isEmpty() || number.isEmpty() || address.isEmpty() || valueString.isEmpty() || selectedDates.isEmpty()) {
-            Toast.makeText(this, "Preencha todos os campos e selecione uma data.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val value = valueString.toDoubleOrNull()
-        if (value == null) {
-            Toast.makeText(this, "Valor inválido.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        // Para cada data selecionada, insere uma nova reserva
-        var allInserted = true
-        for (date in selectedDates) {
-            val booking = Booking(date.first, date.second, date.third, name, number, address, description, value)
-            val id = databaseHelper.insertBooking(booking)
-            if (id == -1L) {
-                allInserted = false
-                Toast.makeText(this, "Erro ao inserir reserva para ${date.first}/${date.second}/${date.third}", Toast.LENGTH_LONG).show()
-                break
-            }
-        }
-
-        if (allInserted) {
-            Toast.makeText(this, "Reserva(s) inserida(s) com sucesso!", Toast.LENGTH_SHORT).show()
-            finish() // Retorna à MainActivity
-        }
-    }
-
-    private fun updateBooking() {
-        val name = nameEditText.text.toString().trim()
-        val number = numberEditText.text.toString().trim()
-        val address = addressEditText.text.toString().trim()
-        val description = descriptionEditText.text.toString().trim()
-        val valueString = valueEditText.text.toString().trim()
-
-        if (name.isEmpty() || number.isEmpty() || address.isEmpty() || valueString.isEmpty() || selectedDates.isEmpty()) {
-            Toast.makeText(this, "Preencha todos os campos e selecione uma data.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val value = valueString.toDoubleOrNull()
-        if (value == null) {
-            Toast.makeText(this, "Valor inválido.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        existingBooking?.let { oldBooking ->
-            // Se as datas foram alteradas, precisamos remover as antigas e inserir as novas.
-            // Para simplificar, vou assumir que na atualização, a data selecionada no calendário
-            // é a nova data para a reserva, e a reserva original se refere à data antiga.
-            // Se o usuário puder selecionar múltiplas datas na tela de edição,
-            // a lógica precisaria de um loop para atualizar/inserir cada uma.
-
-            // Para o requisito, a atualização lida com a data antiga e a nova data selecionada no calendário.
-            // Assumimos que 'selectedDates' agora contém a(s) nova(s) data(s) para a reserva.
-            // Se a data antiga não estiver mais em selectedDates, ela deve ser removida.
-            // Se as datas em selectedDates não existirem, elas devem ser adicionadas.
-
-            // Lógica simplificada: exclui a reserva antiga e insere a nova com as novas datas
-            val firstSelectedDate = selectedDates.first() // Assumimos que a nova reserva será associada a essa data
-            val newBooking = Booking(
-                firstSelectedDate.first,
-                firstSelectedDate.second,
-                firstSelectedDate.third,
-                name, number, address, description, value
-            )
-
-            val rowsAffected = databaseHelper.updateBooking(oldBooking, newBooking) // Método customizado que exclui e insere
-            if (rowsAffected > 0) {
-                Toast.makeText(this, "Reserva atualizada com sucesso!", Toast.LENGTH_SHORT).show()
-                finish() // Retorna à MainActivity
+            // Lógica para excluir múltiplas reservas
+            if (selectedDates.isNotEmpty()) {
+                deleteMultipleBookings()
             } else {
-                Toast.makeText(this, "Erro ao atualizar reserva.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Nenhuma data selecionada para excluir.", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun deleteBooking() {
-        val firstSelectedDate = selectedDates.first() // Assumimos que estamos excluindo a reserva para essa data
-        val rowsAffected = databaseHelper.deleteBooking(firstSelectedDate.first, firstSelectedDate.second, firstSelectedDate.third)
-        if (rowsAffected > 0) {
-            Toast.makeText(this, "Reserva excluída com sucesso!", Toast.LENGTH_SHORT).show()
-            finish() // Retorna à MainActivity
+    private fun insertOrUpdateBookings() {
+        val name = nameEditText.text.toString()
+        val number = numberEditText.text.toString()
+        val address = addressEditText.text.toString()
+        val description = descriptionEditText.text.toString()
+        val value = valueEditText.text.toString().toDoubleOrNull()
+
+        if (name.isBlank() || value == null) {
+            Toast.makeText(this, "Por favor, preencha nome e valor.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        var allBookingsProcessed = true
+        selectedDates.forEach { (dia, mes, ano) ->
+            val newBooking = Booking(dia, mes, ano, name, number, address, description, value)
+
+            // Lógica de "UPSERT" (Update ou Insert):
+            // Tenta obter a reserva existente para esta data.
+            val existing = databaseHelper.getBooking(dia, mes, ano)
+            if (existing != null) {
+                // Se existe, atualiza. (A sua função updateBooking faz um delete+insert).
+                val rowsAffected = databaseHelper.updateBooking(existing, newBooking)
+                if (rowsAffected == 0) {
+                    allBookingsProcessed = false
+                    // Opcional: Toast para a data específica que falhou a atualização
+                }
+            } else {
+                // Se não existe, insere.
+                val newRowId = databaseHelper.insertBooking(newBooking)
+                if (newRowId == -1L) {
+                    allBookingsProcessed = false
+                    // Opcional: Toast para a data específica que falhou a inserção
+                }
+            }
+        }
+
+        if (allBookingsProcessed) {
+            Toast.makeText(this, "Reservas processadas com sucesso!", Toast.LENGTH_SHORT).show()
+            finish()
         } else {
-            Toast.makeText(this, "Erro ao excluir reserva.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Ocorreu um erro ao processar algumas reservas.", Toast.LENGTH_LONG).show()
+        }
+    }
+
+
+    private fun deleteMultipleBookings() {
+        var allBookingsDeleted = true
+        selectedDates.forEach { (dia, mes, ano) ->
+            val rowsAffected = databaseHelper.deleteBooking(dia, mes, ano)
+            if (rowsAffected == 0) {
+                allBookingsDeleted = false
+                // Opcional: mostrar Toast para a data específica que falhou a exclusão
+            }
+        }
+
+        if (allBookingsDeleted) {
+            Toast.makeText(this, "Reservas excluídas com sucesso!", Toast.LENGTH_SHORT).show()
+            finish()
+        } else {
+            Toast.makeText(this, "Ocorreu um erro ao excluir algumas reservas.", Toast.LENGTH_LONG).show()
         }
     }
 }
