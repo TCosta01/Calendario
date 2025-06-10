@@ -4,15 +4,19 @@ package com.example.calendario
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import com.example.calendario.EventDecorator
 
 class MainActivity : AppCompatActivity(), OnDateSelectedListener {
 
@@ -20,6 +24,7 @@ class MainActivity : AppCompatActivity(), OnDateSelectedListener {
     private lateinit var selectedDatesTextView: TextView
     private lateinit var doneButton: Button
     private lateinit var databaseHelper: DatabaseHelper
+    private lateinit var currentMonthYearTextView: TextView // Novo TextView para Mês/Ano
 
     // Armazena as datas que o usuário CLICOU para uma NOVA RESERVA
     private val currentSelectedDates = mutableSetOf<Triple<Int, Int, Int>>()
@@ -31,11 +36,22 @@ class MainActivity : AppCompatActivity(), OnDateSelectedListener {
         calendarView = findViewById(R.id.calendarView)
         selectedDatesTextView = findViewById(R.id.selectedDatesTextView)
         doneButton = findViewById(R.id.doneButton)
+        currentMonthYearTextView = findViewById(R.id.currentMonthYearTextView) // Inicializar o novo TextView
         databaseHelper = DatabaseHelper(this)
 
         calendarView.setOnDateChangedListener(this)
 
+        // Listener para mudanças de mês/ano no calendário
+        calendarView.setOnMonthChangedListener { widget, date ->
+            updateMonthYearDisplay(date)
+        }
+
+        currentMonthYearTextView.setOnClickListener {
+            showMonthSelectionDialog()
+        }
+
         markBookedDates() // Marca as datas já reservadas do banco de dados
+        updateMonthYearDisplay(calendarView.currentDate) // Atualiza o display inicial
 
         doneButton.setOnClickListener {
             handleDoneButtonClick()
@@ -85,7 +101,7 @@ class MainActivity : AppCompatActivity(), OnDateSelectedListener {
         // Re-aplica o decorador para as datas no currentSelectedDates (as datas que o usuário clicou para uma NOVA reserva)
         val selectedCalendarDays = currentSelectedDates.map { CalendarDay.from(it.third, it.second - 1, it.first) }
         // Use uma cor diferente para datas selecionadas (não reservadas) se quiser.
-        widget.addDecorator(EventDecorator(Color.parseColor("#FFBB86FC"), selectedCalendarDays))
+        widget.addDecorator(EventDecorator(Color.parseColor("#80FFBB86"), selectedCalendarDays)) // Cor mais clara para seleção temporária
 
         // Adiciona novamente os decoradores para as datas JÁ RESERVADAS (para não perdê-los)
         markBookedDates()
@@ -100,7 +116,7 @@ class MainActivity : AppCompatActivity(), OnDateSelectedListener {
         val calendarDays = bookedDates.map { CalendarDay.from(it.ano, it.mes - 1, it.dia) }
 
         // Aplica o decorador para as datas que já estão reservadas
-        calendarView.addDecorator(EventDecorator(Color.parseColor("#FFBB86FC"), calendarDays))
+        calendarView.addDecorator(EventDecorator(Color.parseColor("#FFBB86FC"), calendarDays)) // Cor original para reservas
     }
 
     private fun updateSelectedDatesText() {
@@ -108,9 +124,46 @@ class MainActivity : AppCompatActivity(), OnDateSelectedListener {
             selectedDatesTextView.text = "Datas selecionadas: Nenhuma"
         } else {
             val datesText = currentSelectedDates.sortedWith(compareBy({ it.third }, { it.second }, { it.first }))
-                .joinToString(", ") { "${it.first}/${it.second}/${it.third}" }
+                .joinToString(", ") { "${String.format("%02d", it.first)}/${String.format("%02d", it.second)}/${it.third}" }
             selectedDatesTextView.text = "Datas selecionadas (Nova Reserva): $datesText"
         }
+    }
+
+    private fun updateMonthYearDisplay(calendarDay: CalendarDay) {
+        val monthNames = arrayOf(
+            "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+        )
+        val monthName = monthNames[calendarDay.month] // calendarDay.month é 0-based
+        currentMonthYearTextView.text = "$monthName ${calendarDay.year}"
+    }
+
+    private fun showMonthSelectionDialog() {
+        val year = calendarView.currentDate.year
+        val monthNames = arrayOf(
+            "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+        )
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Selecione o Mês ($year)")
+
+        builder.setItems(monthNames) { dialog, which ->
+            // `which` é o índice do mês selecionado (0 para Janeiro, 11 para Dezembro)
+            val selectedMonth = which
+
+            // Atualiza o calendário para o mês selecionado no ano atual
+            val newCalendarDay = CalendarDay.from(year, selectedMonth, 1) // Define para o dia 1 do mês selecionado
+            calendarView.setCurrentDate(newCalendarDay, true) // O segundo parâmetro `animated` pode ser true ou false
+            updateMonthYearDisplay(newCalendarDay) // Atualiza o TextView do mês/ano
+            markBookedDates() // Redesenha os decoradores para o novo mês
+            currentSelectedDates.clear() // Limpa seleções temporárias ao mudar de mês
+            updateSelectedDatesText()
+            dialog.dismiss()
+        }
+
+        val dialog = builder.create()
+        dialog.show()
     }
 
     private fun handleDoneButtonClick() {

@@ -8,18 +8,36 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/currentMonthYearTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mês Ano"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_blue_dark"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="8dp"
+        android:minHeight="48dp"
+        />
+
+
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+
     <TextView
-    android:id="@+id/selectedDatesTextView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Datas selecionadas: Nenhuma"
-    android:layout_marginTop="16dp"
-    android:textSize="18sp"/>
+        android:id="@+id/selectedDatesTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Datas selecionadas: Nenhuma"
+        android:layout_marginTop="16dp"
+        android:textSize="18sp"/>
 
     <Button
         android:id="@+id/doneButton"

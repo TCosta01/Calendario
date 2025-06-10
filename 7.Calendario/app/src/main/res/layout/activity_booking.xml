@@ -82,7 +82,8 @@
                 android:id="@+id/valueEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"/>
+                android:inputType="numberDecimal"
+                android:lines="3"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
