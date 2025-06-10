@@ -21,7 +21,8 @@ class MainActivity : AppCompatActivity(), OnDateSelectedListener {
     private lateinit var doneButton: Button
     private lateinit var databaseHelper: DatabaseHelper
 
-    private val currentSelectedDates = mutableSetOf<Triple<Int, Int, Int>>() // Armazena as datas selecionadas
+    // Armazena as datas que o usuário CLICOU para uma NOVA RESERVA
+    private val currentSelectedDates = mutableSetOf<Triple<Int, Int, Int>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +57,21 @@ class MainActivity : AppCompatActivity(), OnDateSelectedListener {
     override fun onDateSelected(widget: MaterialCalendarView, date: CalendarDay, selected: Boolean) {
         val selectedDateTriple = Triple(date.day, date.month + 1, date.year) // Mês é 0-based no CalendarDay
 
-        // Alterna o estado da data no nosso conjunto de seleções
+        // Primeiro, verifique se a data clicada JÁ TEM uma reserva
+        val existingBookingForDay = databaseHelper.getBooking(selectedDateTriple.first, selectedDateTriple.second, selectedDateTriple.third)
+
+        if (existingBookingForDay != null) {
+            // Se a data clicada já está reservada, vá para a BookingActivity para EDITAR/VISUALIZAR o grupo
+            val intent = Intent(this, BookingActivity::class.java).apply {
+                putExtra("bookingGroupId", existingBookingForDay.bookingGroupId) // Passa o ID do grupo
+                putExtra("isEditMode", true) // Indica que estamos em modo de edição
+            }
+            startActivity(intent)
+            // Não adicione esta data ao currentSelectedDates, pois estamos visualizando/editando uma reserva existente
+            return
+        }
+
+        // Se a data NÃO TEM reserva, então ela faz parte de uma NOVA seleção
         if (currentSelectedDates.contains(selectedDateTriple)) {
             currentSelectedDates.remove(selectedDateTriple)
         } else {
@@ -64,14 +79,12 @@ class MainActivity : AppCompatActivity(), OnDateSelectedListener {
         }
 
         // Limpa a seleção interna da MaterialCalendarView para não interferir
-        // e force a redesenho para aplicar nossos decoradores personalizados
         widget.clearSelection()
         widget.invalidateDecorators() // Isso remove todos os decoradores existentes e permite re-aplicá-los
 
-        // Re-aplica o decorador para as datas no currentSelectedDates (as datas que o usuário clicou)
+        // Re-aplica o decorador para as datas no currentSelectedDates (as datas que o usuário clicou para uma NOVA reserva)
         val selectedCalendarDays = currentSelectedDates.map { CalendarDay.from(it.third, it.second - 1, it.first) }
         // Use uma cor diferente para datas selecionadas (não reservadas) se quiser.
-        // Aqui, estou usando a mesma cor, mas você pode definir outra constante.
         widget.addDecorator(EventDecorator(Color.parseColor("#FFBB86FC"), selectedCalendarDays))
 
         // Adiciona novamente os decoradores para as datas JÁ RESERVADAS (para não perdê-los)
@@ -96,7 +109,7 @@ class MainActivity : AppCompatActivity(), OnDateSelectedListener {
         } else {
             val datesText = currentSelectedDates.sortedWith(compareBy({ it.third }, { it.second }, { it.first }))
                 .joinToString(", ") { "${it.first}/${it.second}/${it.third}" }
-            selectedDatesTextView.text = "Datas selecionadas: $datesText"
+            selectedDatesTextView.text = "Datas selecionadas (Nova Reserva): $datesText"
         }
     }
 
@@ -107,10 +120,8 @@ class MainActivity : AppCompatActivity(), OnDateSelectedListener {
         }
 
         val intent = Intent(this, BookingActivity::class.java).apply {
-            // Passa todas as datas selecionadas para a BookingActivity
-            putExtra("selectedDates", ArrayList(currentSelectedDates))
-            // isEditMode agora é tratado dentro da BookingActivity com base nas datas.
-            putExtra("isEditMode", false) // Assume que é uma tentativa de nova reserva para as datas selecionadas
+            putExtra("selectedDatesForNewBooking", ArrayList(currentSelectedDates)) // Passa as datas para uma NOVA reserva
+            putExtra("isEditMode", false) // Indica que é uma nova reserva
         }
         startActivity(intent)
     }

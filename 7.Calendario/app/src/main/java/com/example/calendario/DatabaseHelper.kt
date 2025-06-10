@@ -5,13 +5,13 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log // Adicione para logs de debug, se quiser
+import android.util.Log
 
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
         private const val DATABASE_NAME = "ReservaApp.db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2 // Incrementar a versão do banco de dados
         const val TABLE_RESERVAS = "Reservas"
         const val COLUMN_DIA = "dia"
         const val COLUMN_MES = "mes"
@@ -21,6 +21,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         const val COLUMN_ENDERECO = "endereco"
         const val COLUMN_DESCRICAO = "descricao"
         const val COLUMN_VALOR = "valor"
+        const val COLUMN_BOOKING_GROUP_ID = "booking_group_id" // Nova coluna
     }
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -32,12 +33,14 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                 + COLUMN_NUMERO + " TEXT,"
                 + COLUMN_ENDERECO + " TEXT,"
                 + COLUMN_DESCRICAO + " TEXT,"
-                + COLUMN_VALOR + " REAL," // Mude para REAL para Double
-                + "PRIMARY KEY (" + COLUMN_DIA + ", " + COLUMN_MES + ", " + COLUMN_ANO + "))") // Chave primária composta
+                + COLUMN_VALOR + " REAL,"
+                + COLUMN_BOOKING_GROUP_ID + " TEXT," // Adicionando a nova coluna
+                + "PRIMARY KEY (" + COLUMN_DIA + ", " + COLUMN_MES + ", " + COLUMN_ANO + "))")
         db.execSQL(CREATE_RESERVAS_TABLE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        // Drop all tables and recreate them to handle schema changes
         db.execSQL("DROP TABLE IF EXISTS $TABLE_RESERVAS")
         onCreate(db)
     }
@@ -53,6 +56,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             put(COLUMN_ENDERECO, booking.endereco)
             put(COLUMN_DESCRICAO, booking.descricao)
             put(COLUMN_VALOR, booking.valor)
+            put(COLUMN_BOOKING_GROUP_ID, booking.bookingGroupId) // Salva o Group ID
         }
         val id = db.insert(TABLE_RESERVAS, null, values)
         db.close()
@@ -76,7 +80,8 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                     val endereco = it.getString(it.getColumnIndexOrThrow(COLUMN_ENDERECO))
                     val descricao = it.getString(it.getColumnIndexOrThrow(COLUMN_DESCRICAO))
                     val valor = it.getDouble(it.getColumnIndexOrThrow(COLUMN_VALOR))
-                    val booking = Booking(dia, mes, ano, nome, numero, endereco, descricao, valor)
+                    val bookingGroupId = it.getString(it.getColumnIndexOrThrow(COLUMN_BOOKING_GROUP_ID))
+                    val booking = Booking(dia, mes, ano, nome, numero, endereco, descricao, valor, bookingGroupId)
                     bookingList.add(booking)
                 } while (it.moveToNext())
             }
@@ -102,7 +107,8 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                 val endereco = it.getString(it.getColumnIndexOrThrow(COLUMN_ENDERECO))
                 val descricao = it.getString(it.getColumnIndexOrThrow(COLUMN_DESCRICAO))
                 val valor = it.getDouble(it.getColumnIndexOrThrow(COLUMN_VALOR))
-                booking = Booking(dia, mes, ano, nome, numero, endereco, descricao, valor)
+                val bookingGroupId = it.getString(it.getColumnIndexOrThrow(COLUMN_BOOKING_GROUP_ID))
+                booking = Booking(dia, mes, ano, nome, numero, endereco, descricao, valor, bookingGroupId)
             }
             it.close()
         }
@@ -110,45 +116,48 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         return booking
     }
 
-    fun updateBooking(oldBooking: Booking, newBooking: Booking): Int {
-        val db = this.writableDatabase
-        db.beginTransaction()
-        var rowsAffected = 0
-        try {
-            // Tenta excluir a reserva antiga com base na chave primária
-            val deleteRows = db.delete(
-                TABLE_RESERVAS,
-                "$COLUMN_DIA = ? AND $COLUMN_MES = ? AND $COLUMN_ANO = ?",
-                arrayOf(oldBooking.dia.toString(), oldBooking.mes.toString(), oldBooking.ano.toString())
-            )
-            // Log.d("DatabaseHelper", "Deleted rows: $deleteRows for ${oldBooking.dia}/${oldBooking.mes}/${oldBooking.ano}")
+    // Novo método para obter todas as reservas de um grupo
+    fun getBookingsByGroupId(groupId: String): List<Booking> {
+        val bookingList = mutableListOf<Booking>()
+        val selectQuery = "SELECT * FROM $TABLE_RESERVAS WHERE $COLUMN_BOOKING_GROUP_ID = ?"
+        val db = this.readableDatabase
+        val cursor = db.rawQuery(selectQuery, arrayOf(groupId))
 
-            // Tenta inserir a nova reserva (que pode ter os mesmos dados, mas com o "upsert" de delete+insert)
-            val values = ContentValues().apply {
-                put(COLUMN_DIA, newBooking.dia)
-                put(COLUMN_MES, newBooking.mes)
-                put(COLUMN_ANO, newBooking.ano)
-                put(COLUMN_NOME, newBooking.nome)
-                put(COLUMN_NUMERO, newBooking.numero)
-                put(COLUMN_ENDERECO, newBooking.endereco)
-                put(COLUMN_DESCRICAO, newBooking.descricao)
-                put(COLUMN_VALOR, newBooking.valor)
+        cursor?.let {
+            if (it.moveToFirst()) {
+                do {
+                    val dia = it.getInt(it.getColumnIndexOrThrow(COLUMN_DIA))
+                    val mes = it.getInt(it.getColumnIndexOrThrow(COLUMN_MES))
+                    val ano = it.getInt(it.getColumnIndexOrThrow(COLUMN_ANO))
+                    val nome = it.getString(it.getColumnIndexOrThrow(COLUMN_NOME))
+                    val numero = it.getString(it.getColumnIndexOrThrow(COLUMN_NUMERO))
+                    val endereco = it.getString(it.getColumnIndexOrThrow(COLUMN_ENDERECO))
+                    val descricao = it.getString(it.getColumnIndexOrThrow(COLUMN_DESCRICAO))
+                    val valor = it.getDouble(it.getColumnIndexOrThrow(COLUMN_VALOR))
+                    val bookingGroupId = it.getString(it.getColumnIndexOrThrow(COLUMN_BOOKING_GROUP_ID))
+                    val booking = Booking(dia, mes, ano, nome, numero, endereco, descricao, valor, bookingGroupId)
+                    bookingList.add(booking)
+                } while (it.moveToNext())
             }
-            val newRowId = db.insert(TABLE_RESERVAS, null, values)
-            // Log.d("DatabaseHelper", "Inserted new row ID: $newRowId for ${newBooking.dia}/${newBooking.mes}/${newBooking.ano}")
-
-            if (newRowId != -1L) { // Se a inserção foi bem-sucedida, consideramos a operação como bem-sucedida
-                rowsAffected = 1
-            }
-
-            db.setTransactionSuccessful()
-        } catch (e: Exception) {
-            Log.e("DatabaseHelper", "Error during updateBooking transaction: ${e.message}", e)
-            rowsAffected = 0
-        } finally {
-            db.endTransaction()
-            db.close()
+            it.close()
         }
+        db.close()
+        return bookingList
+    }
+
+    // Método para atualizar todas as reservas de um grupo
+    fun updateBookingsInGroup(groupId: String, newName: String, newNumber: String, newAddress: String,
+                              newDescription: String, newValue: Double): Int {
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put(COLUMN_NOME, newName)
+            put(COLUMN_NUMERO, newNumber)
+            put(COLUMN_ENDERECO, newAddress)
+            put(COLUMN_DESCRICAO, newDescription)
+            put(COLUMN_VALOR, newValue)
+        }
+        val rowsAffected = db.update(TABLE_RESERVAS, values, "$COLUMN_BOOKING_GROUP_ID = ?", arrayOf(groupId))
+        db.close()
         return rowsAffected
     }
 
@@ -159,6 +168,14 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             "$COLUMN_DIA = ? AND $COLUMN_MES = ? AND $COLUMN_ANO = ?",
             arrayOf(day.toString(), month.toString(), year.toString())
         )
+        db.close()
+        return rowsAffected
+    }
+
+    // Método para excluir todas as reservas de um grupo
+    fun deleteBookingsByGroupId(groupId: String): Int {
+        val db = this.writableDatabase
+        val rowsAffected = db.delete(TABLE_RESERVAS, "$COLUMN_BOOKING_GROUP_ID = ?", arrayOf(groupId))
         db.close()
         return rowsAffected
     }

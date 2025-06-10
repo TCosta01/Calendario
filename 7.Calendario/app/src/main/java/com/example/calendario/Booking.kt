@@ -1,7 +1,8 @@
-// src/main/java/com/yourpackage/yourapp/Booking.kt
-package com.example.calendario // Substitua pelo seu package
+// src/main/java/com/example/calendario/Booking.kt
+package com.example.calendario
 
 import java.io.Serializable
+import java.util.UUID // Importar para gerar IDs únicos
 
 data class Booking(
     val dia: Int,
@@ -11,5 +12,6 @@ data class Booking(
     var numero: String,
     var endereco: String,
     var descricao: String,
-    var valor: Double
-) : Serializable // Necessário para passar objetos entre Activities
+    var valor: Double,
+    val bookingGroupId: String = UUID.randomUUID().toString() // Gerar um ID único por padrão
+) : Serializable
