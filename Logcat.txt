@@ -1,0 +1,717 @@
+--------- beginning of kernel
+--------- beginning of system
+--------- beginning of crash
+2025-06-07 20:01:49.027 20438-20438 TransactionExecutor     pid-20438                            E  Failed to execute the transaction: tId:-565848464 ClientTransaction{
+                                                                                                    tId:-565848464   transactionItems=[
+                                                                                                    tId:-565848464     LaunchActivityItem{activityToken=android.os.BinderProxy@6b71259,intent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10000000 xflg=0x4 cmp=com.example.calendario/.MainActivity },ident=249528657,info=ActivityInfo{e8341b com.example.calendario.MainActivity},curConfig={1.0 310mcc260mnc [en_US] ldltr sw384dp w384dp h640dp 320dpi nrml long port finger qwerty/v/v dpad/v winConfig={ mBounds=Rect(0, 0 - 768, 1280) mAppBounds=Rect(0, 0 - 768, 1280) mMaxBounds=Rect(0, 0 - 768, 1280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.157 fontWeightAdjustment=0},overrideConfig={1.0 310mcc260mnc [en_US] ldltr sw384dp w384dp h640dp 320dpi nrml long port finger qwerty/v/v dpad/v winConfig={ mBounds=Rect(0, 0 - 768, 1280) mAppBounds=Rect(0, 0 - 768, 1280) mMaxBounds=Rect(0, 0 - 768, 1280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.2 fontWeightAdjustment=0},deviceId=0,referrer=com.android.shell,procState=2,state=null,persistentState=null,pendingResults=null,pendingNewIntents=null,sceneTransitionInfo=null,profilerInfo=null,assistToken=android.os.BinderProxy@d627ccc,shareableActivityToken=android.os.BinderProxy@6bd7b15,activityWindowInfo=ActivityWindowInfo{isEmbedded=false, taskBounds=Rect(0, 0 - 768, 1280), taskFragmentBounds=Rect(0, 0 - 768, 1280)}}
+                                                                                                    tId:-565848464     ResumeActivityItem{mActivityToken=android.os.BinderProxy@6b71259,procState=-1,isForward=true,shouldSendCompatFakeFocus=false}
+                                                                                                    tId:-565848464     Target activity: Not found for token: android.os.BinderProxy@6b71259
+                                                                                                    tId:-565848464   ]
+                                                                                                    tId:-565848464 }
+2025-06-07 20:01:49.065 20438-20438 AndroidRuntime          pid-20438                            E  FATAL EXCEPTION: main
+                                                                                                    Process: com.example.calendario, PID: 20438
+                                                                                                    java.lang.RuntimeException: Unable to instantiate activity ComponentInfo{com.example.calendario/com.example.calendario.MainActivity}: java.lang.ClassNotFoundException: Didn't find class "com.example.calendario.MainActivity" on path: DexPathList[[zip file "/data/app/~~L_ihn6M_c3HnpD01AzRu7w==/com.example.calendario-BCtPnXAvjrWpnGceF8WfCA==/base.apk"],nativeLibraryDirectories=[/data/app/~~L_ihn6M_c3HnpD01AzRu7w==/com.example.calendario-BCtPnXAvjrWpnGceF8WfCA==/lib/x86_64, /system/lib64, /system_ext/lib64]]
+                                                                                                    	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:4186)
+                                                                                                    	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:4467)
+                                                                                                    	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:222)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:133)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:103)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:80)
+                                                                                                    	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2823)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:110)
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:248)
+                                                                                                    	at android.os.Looper.loop(Looper.java:338)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:9067)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+                                                                                                    Caused by: java.lang.ClassNotFoundException: Didn't find class "com.example.calendario.MainActivity" on path: DexPathList[[zip file "/data/app/~~L_ihn6M_c3HnpD01AzRu7w==/com.example.calendario-BCtPnXAvjrWpnGceF8WfCA==/base.apk"],nativeLibraryDirectories=[/data/app/~~L_ihn6M_c3HnpD01AzRu7w==/com.example.calendario-BCtPnXAvjrWpnGceF8WfCA==/lib/x86_64, /system/lib64, /system_ext/lib64]]
+                                                                                                    	at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:259)
+                                                                                                    	at java.lang.ClassLoader.loadClass(ClassLoader.java:637)
+                                                                                                    	at java.lang.ClassLoader.loadClass(ClassLoader.java:573)
+                                                                                                    	at android.app.AppComponentFactory.instantiateActivity(AppComponentFactory.java:95)
+                                                                                                    	at androidx.core.app.CoreComponentFactory.instantiateActivity(CoreComponentFactory.java:44)
+                                                                                                    	at android.app.Instrumentation.newActivity(Instrumentation.java:1443)
+                                                                                                    	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:4173)
+                                                                                                    	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:4467) 
+                                                                                                    	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:222) 
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:133) 
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:103) 
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:80) 
+                                                                                                    	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2823) 
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:110) 
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:248) 
+                                                                                                    	at android.os.Looper.loop(Looper.java:338) 
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:9067) 
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method) 
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593) 
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932) 
+2025-06-07 20:02:02.933 20473-20473 TransactionExecutor     pid-20473                            E  Failed to execute the transaction: tId:-906710996 ClientTransaction{
+                                                                                                    tId:-906710996   transactionItems=[
+                                                                                                    tId:-906710996     LaunchActivityItem{activityToken=android.os.BinderProxy@6b71259,intent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10100000 xflg=0x4 cmp=com.example.calendario/.MainActivity },ident=141836527,info=ActivityInfo{e8341b com.example.calendario.MainActivity},curConfig={1.0 310mcc260mnc [en_US] ldltr sw384dp w384dp h640dp 320dpi nrml long port finger qwerty/v/v dpad/v winConfig={ mBounds=Rect(0, 0 - 768, 1280) mAppBounds=Rect(0, 0 - 768, 1280) mMaxBounds=Rect(0, 0 - 768, 1280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.158 fontWeightAdjustment=0},overrideConfig={1.0 310mcc260mnc [en_US] ldltr sw384dp w384dp h640dp 320dpi nrml long port finger qwerty/v/v dpad/v winConfig={ mBounds=Rect(0, 0 - 768, 1280) mAppBounds=Rect(0, 0 - 768, 1280) mMaxBounds=Rect(0, 0 - 768, 1280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.2 fontWeightAdjustment=0},deviceId=0,referrer=com.android.shell,procState=2,state=null,persistentState=null,pendingResults=null,pendingNewIntents=null,sceneTransitionInfo=null,profilerInfo=null,assistToken=android.os.BinderProxy@d627ccc,shareableActivityToken=android.os.BinderProxy@6bd7b15,activityWindowInfo=ActivityWindowInfo{isEmbedded=false, taskBounds=Rect(0, 0 - 768, 1280), taskFragmentBounds=Rect(0, 0 - 768, 1280)}}
+                                                                                                    tId:-906710996     ResumeActivityItem{mActivityToken=android.os.BinderProxy@6b71259,procState=-1,isForward=true,shouldSendCompatFakeFocus=false}
+                                                                                                    tId:-906710996     Target activity: Not found for token: android.os.BinderProxy@6b71259
+                                                                                                    tId:-906710996   ]
+                                                                                                    tId:-906710996 }
+2025-06-07 20:02:02.951 20473-20473 AndroidRuntime          pid-20473                            E  FATAL EXCEPTION: main
+                                                                                                    Process: com.example.calendario, PID: 20473
+                                                                                                    java.lang.RuntimeException: Unable to instantiate activity ComponentInfo{com.example.calendario/com.example.calendario.MainActivity}: java.lang.ClassNotFoundException: Didn't find class "com.example.calendario.MainActivity" on path: DexPathList[[zip file "/data/app/~~L_ihn6M_c3HnpD01AzRu7w==/com.example.calendario-BCtPnXAvjrWpnGceF8WfCA==/base.apk"],nativeLibraryDirectories=[/data/app/~~L_ihn6M_c3HnpD01AzRu7w==/com.example.calendario-BCtPnXAvjrWpnGceF8WfCA==/lib/x86_64, /system/lib64, /system_ext/lib64]]
+                                                                                                    	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:4186)
+                                                                                                    	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:4467)
+                                                                                                    	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:222)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:133)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:103)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:80)
+                                                                                                    	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2823)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:110)
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:248)
+                                                                                                    	at android.os.Looper.loop(Looper.java:338)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:9067)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+                                                                                                    Caused by: java.lang.ClassNotFoundException: Didn't find class "com.example.calendario.MainActivity" on path: DexPathList[[zip file "/data/app/~~L_ihn6M_c3HnpD01AzRu7w==/com.example.calendario-BCtPnXAvjrWpnGceF8WfCA==/base.apk"],nativeLibraryDirectories=[/data/app/~~L_ihn6M_c3HnpD01AzRu7w==/com.example.calendario-BCtPnXAvjrWpnGceF8WfCA==/lib/x86_64, /system/lib64, /system_ext/lib64]]
+                                                                                                    	at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:259)
+                                                                                                    	at java.lang.ClassLoader.loadClass(ClassLoader.java:637)
+                                                                                                    	at java.lang.ClassLoader.loadClass(ClassLoader.java:573)
+                                                                                                    	at android.app.AppComponentFactory.instantiateActivity(AppComponentFactory.java:95)
+                                                                                                    	at androidx.core.app.CoreComponentFactory.instantiateActivity(CoreComponentFactory.java:44)
+                                                                                                    	at android.app.Instrumentation.newActivity(Instrumentation.java:1443)
+                                                                                                    	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:4173)
+                                                                                                    	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:4467) 
+                                                                                                    	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:222) 
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:133) 
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:103) 
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:80) 
+                                                                                                    	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2823) 
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:110) 
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:248) 
+                                                                                                    	at android.os.Looper.loop(Looper.java:338) 
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:9067) 
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method) 
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593) 
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932) 
+2025-06-07 20:07:33.688 20689-20689 TransactionExecutor     pid-20689                            E  Failed to execute the transaction: tId:1223239934 ClientTransaction{
+                                                                                                    tId:1223239934   transactionItems=[
+                                                                                                    tId:1223239934     LaunchActivityItem{activityToken=android.os.BinderProxy@6b71259,intent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10000000 xflg=0x4 cmp=com.example.calendario/.MainActivity },ident=57359096,info=ActivityInfo{e8341b com.example.calendario.MainActivity},curConfig={1.0 310mcc260mnc [en_US] ldltr sw384dp w384dp h640dp 320dpi nrml long port finger qwerty/v/v dpad/v winConfig={ mBounds=Rect(0, 0 - 768, 1280) mAppBounds=Rect(0, 0 - 768, 1280) mMaxBounds=Rect(0, 0 - 768, 1280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.159 fontWeightAdjustment=0},overrideConfig={1.0 310mcc260mnc [en_US] ldltr sw384dp w384dp h640dp 320dpi nrml long port finger qwerty/v/v dpad/v winConfig={ mBounds=Rect(0, 0 - 768, 1280) mAppBounds=Rect(0, 0 - 768, 1280) mMaxBounds=Rect(0, 0 - 768, 1280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.2 fontWeightAdjustment=0},deviceId=0,referrer=com.android.shell,procState=2,state=null,persistentState=null,pendingResults=null,pendingNewIntents=null,sceneTransitionInfo=null,profilerInfo=null,assistToken=android.os.BinderProxy@d627ccc,shareableActivityToken=android.os.BinderProxy@6bd7b15,activityWindowInfo=ActivityWindowInfo{isEmbedded=false, taskBounds=Rect(0, 0 - 768, 1280), taskFragmentBounds=Rect(0, 0 - 768, 1280)}}
+                                                                                                    tId:1223239934     ResumeActivityItem{mActivityToken=android.os.BinderProxy@6b71259,procState=-1,isForward=true,shouldSendCompatFakeFocus=false}
+                                                                                                    tId:1223239934     Target activity: Not found for token: android.os.BinderProxy@6b71259
+                                                                                                    tId:1223239934   ]
+                                                                                                    tId:1223239934 }
+2025-06-07 20:07:33.735 20689-20689 AndroidRuntime          pid-20689                            E  FATAL EXCEPTION: main
+                                                                                                    Process: com.example.calendario, PID: 20689
+                                                                                                    java.lang.RuntimeException: Unable to instantiate activity ComponentInfo{com.example.calendario/com.example.calendario.MainActivity}: java.lang.ClassNotFoundException: Didn't find class "com.example.calendario.MainActivity" on path: DexPathList[[zip file "/data/app/~~gVklggxmxqKVrKJPS7IBSg==/com.example.calendario-wLKf0AjvdKYjUdi4p9_w8Q==/base.apk"],nativeLibraryDirectories=[/data/app/~~gVklggxmxqKVrKJPS7IBSg==/com.example.calendario-wLKf0AjvdKYjUdi4p9_w8Q==/lib/x86_64, /system/lib64, /system_ext/lib64]]
+                                                                                                    	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:4186)
+                                                                                                    	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:4467)
+                                                                                                    	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:222)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:133)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:103)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:80)
+                                                                                                    	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2823)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:110)
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:248)
+                                                                                                    	at android.os.Looper.loop(Looper.java:338)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:9067)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+                                                                                                    Caused by: java.lang.ClassNotFoundException: Didn't find class "com.example.calendario.MainActivity" on path: DexPathList[[zip file "/data/app/~~gVklggxmxqKVrKJPS7IBSg==/com.example.calendario-wLKf0AjvdKYjUdi4p9_w8Q==/base.apk"],nativeLibraryDirectories=[/data/app/~~gVklggxmxqKVrKJPS7IBSg==/com.example.calendario-wLKf0AjvdKYjUdi4p9_w8Q==/lib/x86_64, /system/lib64, /system_ext/lib64]]
+                                                                                                    	at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:259)
+                                                                                                    	at java.lang.ClassLoader.loadClass(ClassLoader.java:637)
+                                                                                                    	at java.lang.ClassLoader.loadClass(ClassLoader.java:573)
+                                                                                                    	at android.app.AppComponentFactory.instantiateActivity(AppComponentFactory.java:95)
+                                                                                                    	at androidx.core.app.CoreComponentFactory.instantiateActivity(CoreComponentFactory.java:44)
+                                                                                                    	at android.app.Instrumentation.newActivity(Instrumentation.java:1443)
+                                                                                                    	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:4173)
+                                                                                                    	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:4467) 
+                                                                                                    	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:222) 
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:133) 
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:103) 
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:80) 
+                                                                                                    	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2823) 
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:110) 
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:248) 
+                                                                                                    	at android.os.Looper.loop(Looper.java:338) 
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:9067) 
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method) 
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593) 
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932) 
+2025-06-09 18:35:56.585 24175-24175 AndroidRuntime          pid-24175                            E  FATAL EXCEPTION: main
+                                                                                                    Process: com.example.calendario, PID: 24175
+                                                                                                    android.content.ActivityNotFoundException: Unable to find explicit activity class {com.example.calendario/com.example.calendario.ReservaActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+                                                                                                    	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2423)
+                                                                                                    	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2000)
+                                                                                                    	at android.app.Activity.startActivityForResult(Activity.java:5997)
+                                                                                                    	at androidx.activity.ComponentActivity.startActivityForResult(ComponentActivity.kt:675)
+                                                                                                    	at android.app.Activity.startActivityForResult(Activity.java:5954)
+                                                                                                    	at androidx.activity.ComponentActivity.startActivityForResult(ComponentActivity.kt:660)
+                                                                                                    	at android.app.Activity.startActivity(Activity.java:6457)
+                                                                                                    	at android.app.Activity.startActivity(Activity.java:6424)
+                                                                                                    	at com.example.calendario.MainActivity.onCreate$lambda$0(MainActivity.kt:46)
+                                                                                                    	at com.example.calendario.MainActivity.$r8$lambda$QxKvUQeGIGi4Ff9jWO2h5lELn1I(Unknown Source:0)
+                                                                                                    	at com.example.calendario.MainActivity$$ExternalSyntheticLambda0.onClick(D8$$SyntheticClass:0)
+                                                                                                    	at android.view.View.performClick(View.java:8083)
+                                                                                                    	at com.google.android.material.button.MaterialButton.performClick(MaterialButton.java:1218)
+                                                                                                    	at android.view.View.performClickInternal(View.java:8060)
+                                                                                                    	at android.view.View.-$$Nest$mperformClickInternal(Unknown Source:0)
+                                                                                                    	at android.view.View$PerformClick.run(View.java:31549)
+                                                                                                    	at android.os.Handler.handleCallback(Handler.java:995)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:103)
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:248)
+                                                                                                    	at android.os.Looper.loop(Looper.java:338)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:9067)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+2025-06-09 18:36:16.911 24257-24257 AndroidRuntime          pid-24257                            E  FATAL EXCEPTION: main
+                                                                                                    Process: com.example.calendario, PID: 24257
+                                                                                                    android.content.ActivityNotFoundException: Unable to find explicit activity class {com.example.calendario/com.example.calendario.ReservaActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+                                                                                                    	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2423)
+                                                                                                    	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2000)
+                                                                                                    	at android.app.Activity.startActivityForResult(Activity.java:5997)
+                                                                                                    	at androidx.activity.ComponentActivity.startActivityForResult(ComponentActivity.kt:675)
+                                                                                                    	at android.app.Activity.startActivityForResult(Activity.java:5954)
+                                                                                                    	at androidx.activity.ComponentActivity.startActivityForResult(ComponentActivity.kt:660)
+                                                                                                    	at android.app.Activity.startActivity(Activity.java:6457)
+                                                                                                    	at android.app.Activity.startActivity(Activity.java:6424)
+                                                                                                    	at com.example.calendario.MainActivity.onCreate$lambda$0(MainActivity.kt:46)
+                                                                                                    	at com.example.calendario.MainActivity.$r8$lambda$QxKvUQeGIGi4Ff9jWO2h5lELn1I(Unknown Source:0)
+                                                                                                    	at com.example.calendario.MainActivity$$ExternalSyntheticLambda0.onClick(D8$$SyntheticClass:0)
+                                                                                                    	at android.view.View.performClick(View.java:8083)
+                                                                                                    	at com.google.android.material.button.MaterialButton.performClick(MaterialButton.java:1218)
+                                                                                                    	at android.view.View.performClickInternal(View.java:8060)
+                                                                                                    	at android.view.View.-$$Nest$mperformClickInternal(Unknown Source:0)
+                                                                                                    	at android.view.View$PerformClick.run(View.java:31549)
+                                                                                                    	at android.os.Handler.handleCallback(Handler.java:995)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:103)
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:248)
+                                                                                                    	at android.os.Looper.loop(Looper.java:338)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:9067)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+2025-06-09 18:37:47.334 24383-24383 AndroidRuntime          pid-24383                            E  FATAL EXCEPTION: main
+                                                                                                    Process: com.example.calendario, PID: 24383
+                                                                                                    android.content.ActivityNotFoundException: Unable to find explicit activity class {com.example.calendario/com.example.calendario.ReservaActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+                                                                                                    	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2423)
+                                                                                                    	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2000)
+                                                                                                    	at android.app.Activity.startActivityForResult(Activity.java:5997)
+                                                                                                    	at androidx.activity.ComponentActivity.startActivityForResult(ComponentActivity.kt:675)
+                                                                                                    	at android.app.Activity.startActivityForResult(Activity.java:5954)
+                                                                                                    	at androidx.activity.ComponentActivity.startActivityForResult(ComponentActivity.kt:660)
+                                                                                                    	at android.app.Activity.startActivity(Activity.java:6457)
+                                                                                                    	at android.app.Activity.startActivity(Activity.java:6424)
+                                                                                                    	at com.example.calendario.MainActivity.onCreate$lambda$0(MainActivity.kt:46)
+                                                                                                    	at com.example.calendario.MainActivity.$r8$lambda$QxKvUQeGIGi4Ff9jWO2h5lELn1I(Unknown Source:0)
+                                                                                                    	at com.example.calendario.MainActivity$$ExternalSyntheticLambda0.onClick(D8$$SyntheticClass:0)
+                                                                                                    	at android.view.View.performClick(View.java:8083)
+                                                                                                    	at com.google.android.material.button.MaterialButton.performClick(MaterialButton.java:1218)
+                                                                                                    	at android.view.View.performClickInternal(View.java:8060)
+                                                                                                    	at android.view.View.-$$Nest$mperformClickInternal(Unknown Source:0)
+                                                                                                    	at android.view.View$PerformClick.run(View.java:31549)
+                                                                                                    	at android.os.Handler.handleCallback(Handler.java:995)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:103)
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:248)
+                                                                                                    	at android.os.Looper.loop(Looper.java:338)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:9067)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+2025-06-09 18:40:10.105 24617-24617 AndroidRuntime          pid-24617                            E  FATAL EXCEPTION: main
+                                                                                                    Process: com.example.calendario, PID: 24617
+                                                                                                    android.content.ActivityNotFoundException: Unable to find explicit activity class {com.example.calendario/com.example.calendario.ReservaActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+                                                                                                    	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2423)
+                                                                                                    	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2000)
+                                                                                                    	at android.app.Activity.startActivityForResult(Activity.java:5997)
+                                                                                                    	at androidx.activity.ComponentActivity.startActivityForResult(ComponentActivity.kt:675)
+                                                                                                    	at android.app.Activity.startActivityForResult(Activity.java:5954)
+                                                                                                    	at androidx.activity.ComponentActivity.startActivityForResult(ComponentActivity.kt:660)
+                                                                                                    	at android.app.Activity.startActivity(Activity.java:6457)
+                                                                                                    	at android.app.Activity.startActivity(Activity.java:6424)
+                                                                                                    	at com.example.calendario.MainActivity.onCreate$lambda$0(MainActivity.kt:46)
+                                                                                                    	at com.example.calendario.MainActivity.$r8$lambda$QxKvUQeGIGi4Ff9jWO2h5lELn1I(Unknown Source:0)
+                                                                                                    	at com.example.calendario.MainActivity$$ExternalSyntheticLambda0.onClick(D8$$SyntheticClass:0)
+                                                                                                    	at android.view.View.performClick(View.java:8083)
+                                                                                                    	at com.google.android.material.button.MaterialButton.performClick(MaterialButton.java:1218)
+                                                                                                    	at android.view.View.performClickInternal(View.java:8060)
+                                                                                                    	at android.view.View.-$$Nest$mperformClickInternal(Unknown Source:0)
+                                                                                                    	at android.view.View$PerformClick.run(View.java:31549)
+                                                                                                    	at android.os.Handler.handleCallback(Handler.java:995)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:103)
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:248)
+                                                                                                    	at android.os.Looper.loop(Looper.java:338)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:9067)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+2025-06-09 18:45:06.897 24921-24921 AndroidRuntime          pid-24921                            E  FATAL EXCEPTION: main
+                                                                                                    Process: com.example.calendario, PID: 24921
+                                                                                                    android.content.ActivityNotFoundException: Unable to find explicit activity class {com.example.calendario/com.example.calendario.ReservaActivity}; have you declared this activity in your AndroidManifest.xml, or does your intent not match its declared <intent-filter>?
+                                                                                                    	at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2423)
+                                                                                                    	at android.app.Instrumentation.execStartActivity(Instrumentation.java:2000)
+                                                                                                    	at android.app.Activity.startActivityForResult(Activity.java:5997)
+                                                                                                    	at androidx.activity.ComponentActivity.startActivityForResult(ComponentActivity.kt:675)
+                                                                                                    	at android.app.Activity.startActivityForResult(Activity.java:5954)
+                                                                                                    	at androidx.activity.ComponentActivity.startActivityForResult(ComponentActivity.kt:660)
+                                                                                                    	at android.app.Activity.startActivity(Activity.java:6457)
+                                                                                                    	at android.app.Activity.startActivity(Activity.java:6424)
+                                                                                                    	at com.example.calendario.MainActivity.onCreate$lambda$0(MainActivity.kt:46)
+                                                                                                    	at com.example.calendario.MainActivity.$r8$lambda$QxKvUQeGIGi4Ff9jWO2h5lELn1I(Unknown Source:0)
+                                                                                                    	at com.example.calendario.MainActivity$$ExternalSyntheticLambda0.onClick(D8$$SyntheticClass:0)
+                                                                                                    	at android.view.View.performClick(View.java:8083)
+                                                                                                    	at com.google.android.material.button.MaterialButton.performClick(MaterialButton.java:1218)
+                                                                                                    	at android.view.View.performClickInternal(View.java:8060)
+                                                                                                    	at android.view.View.-$$Nest$mperformClickInternal(Unknown Source:0)
+                                                                                                    	at android.view.View$PerformClick.run(View.java:31549)
+                                                                                                    	at android.os.Handler.handleCallback(Handler.java:995)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:103)
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:248)
+                                                                                                    	at android.os.Looper.loop(Looper.java:338)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:9067)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+--------- beginning of main
+2025-06-09 20:04:56.244 25616-25616 TransactionExecutor     pid-25616                            E  Failed to execute the transaction: tId:1200135936 ClientTransaction{
+                                                                                                    tId:1200135936   transactionItems=[
+                                                                                                    tId:1200135936     LaunchActivityItem{activityToken=android.os.BinderProxy@6b71259,intent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10000000 xflg=0x4 cmp=com.example.calendario/.MainActivity },ident=46712235,info=ActivityInfo{7376189 com.example.calendario.MainActivity},curConfig={1.0 310mcc260mnc [en_US] ldltr sw384dp w384dp h640dp 320dpi nrml long port finger qwerty/v/v dpad/v winConfig={ mBounds=Rect(0, 0 - 768, 1280) mAppBounds=Rect(0, 0 - 768, 1280) mMaxBounds=Rect(0, 0 - 768, 1280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.174 fontWeightAdjustment=0},overrideConfig={1.0 310mcc260mnc [en_US] ldltr sw384dp w384dp h640dp 320dpi nrml long port finger qwerty/v/v dpad/v winConfig={ mBounds=Rect(0, 0 - 768, 1280) mAppBounds=Rect(0, 0 - 768, 1280) mMaxBounds=Rect(0, 0 - 768, 1280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.2 fontWeightAdjustment=0},deviceId=0,referrer=com.android.shell,procState=2,state=null,persistentState=null,pendingResults=null,pendingNewIntents=null,sceneTransitionInfo=null,profilerInfo=null,assistToken=android.os.BinderProxy@6852742,shareableActivityToken=android.os.BinderProxy@7b40353,activityWindowInfo=ActivityWindowInfo{isEmbedded=false, taskBounds=Rect(0, 0 - 768, 1280), taskFragmentBounds=Rect(0, 0 - 768, 1280)}}
+                                                                                                    tId:1200135936     ResumeActivityItem{mActivityToken=android.os.BinderProxy@6b71259,procState=-1,isForward=true,shouldSendCompatFakeFocus=false}
+                                                                                                    tId:1200135936     Target activity: com.example.calendario.MainActivity
+                                                                                                    tId:1200135936   ]
+                                                                                                    tId:1200135936 }
+2025-06-09 20:04:56.259 25616-25616 AndroidRuntime          pid-25616                            E  FATAL EXCEPTION: main
+                                                                                                    Process: com.example.calendario, PID: 25616
+                                                                                                    java.lang.RuntimeException: Unable to start activity ComponentInfo{com.example.calendario/com.example.calendario.MainActivity}: java.lang.ClassCastException: android.widget.CalendarView cannot be cast to com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                                                                                                    	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:4280)
+                                                                                                    	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:4467)
+                                                                                                    	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:222)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:133)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:103)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:80)
+                                                                                                    	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2823)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:110)
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:248)
+                                                                                                    	at android.os.Looper.loop(Looper.java:338)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:9067)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+                                                                                                    Caused by: java.lang.ClassCastException: android.widget.CalendarView cannot be cast to com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                                                                                                    	at com.example.calendario.MainActivity.onCreate(MainActivity.kt:28)
+                                                                                                    	at android.app.Activity.performCreate(Activity.java:9155)
+                                                                                                    	at android.app.Activity.performCreate(Activity.java:9133)
+                                                                                                    	at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1521)
+                                                                                                    	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:4262)
+                                                                                                    	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:4467) 
+                                                                                                    	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:222) 
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:133) 
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:103) 
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:80) 
+                                                                                                    	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2823) 
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:110) 
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:248) 
+                                                                                                    	at android.os.Looper.loop(Looper.java:338) 
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:9067) 
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method) 
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593) 
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932) 
+2025-06-09 20:05:25.928 25718-25718 TransactionExecutor     pid-25718                            E  Failed to execute the transaction: tId:-1325407600 ClientTransaction{
+                                                                                                    tId:-1325407600   transactionItems=[
+                                                                                                    tId:-1325407600     LaunchActivityItem{activityToken=android.os.BinderProxy@6b71259,intent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10000000 xflg=0x4 cmp=com.example.calendario/.MainActivity },ident=253191283,info=ActivityInfo{7376189 com.example.calendario.MainActivity},curConfig={1.0 310mcc260mnc [en_US] ldltr sw384dp w384dp h640dp 320dpi nrml long port finger qwerty/v/v dpad/v winConfig={ mBounds=Rect(0, 0 - 768, 1280) mAppBounds=Rect(0, 0 - 768, 1280) mMaxBounds=Rect(0, 0 - 768, 1280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.175 fontWeightAdjustment=0},overrideConfig={1.0 310mcc260mnc [en_US] ldltr sw384dp w384dp h640dp 320dpi nrml long port finger qwerty/v/v dpad/v winConfig={ mBounds=Rect(0, 0 - 768, 1280) mAppBounds=Rect(0, 0 - 768, 1280) mMaxBounds=Rect(0, 0 - 768, 1280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.2 fontWeightAdjustment=0},deviceId=0,referrer=com.android.shell,procState=2,state=null,persistentState=null,pendingResults=null,pendingNewIntents=null,sceneTransitionInfo=null,profilerInfo=null,assistToken=android.os.BinderProxy@6852742,shareableActivityToken=android.os.BinderProxy@7b40353,activityWindowInfo=ActivityWindowInfo{isEmbedded=false, taskBounds=Rect(0, 0 - 768, 1280), taskFragmentBounds=Rect(0, 0 - 768, 1280)}}
+                                                                                                    tId:-1325407600     ResumeActivityItem{mActivityToken=android.os.BinderProxy@6b71259,procState=-1,isForward=true,shouldSendCompatFakeFocus=false}
+                                                                                                    tId:-1325407600     Target activity: com.example.calendario.MainActivity
+                                                                                                    tId:-1325407600   ]
+                                                                                                    tId:-1325407600 }
+2025-06-09 20:05:25.932 25718-25718 AndroidRuntime          pid-25718                            E  FATAL EXCEPTION: main
+                                                                                                    Process: com.example.calendario, PID: 25718
+                                                                                                    java.lang.RuntimeException: Unable to start activity ComponentInfo{com.example.calendario/com.example.calendario.MainActivity}: java.lang.ClassCastException: android.widget.CalendarView cannot be cast to com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                                                                                                    	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:4280)
+                                                                                                    	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:4467)
+                                                                                                    	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:222)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:133)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:103)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:80)
+                                                                                                    	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2823)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:110)
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:248)
+                                                                                                    	at android.os.Looper.loop(Looper.java:338)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:9067)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+                                                                                                    Caused by: java.lang.ClassCastException: android.widget.CalendarView cannot be cast to com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                                                                                                    	at com.example.calendario.MainActivity.onCreate(MainActivity.kt:28)
+                                                                                                    	at android.app.Activity.performCreate(Activity.java:9155)
+                                                                                                    	at android.app.Activity.performCreate(Activity.java:9133)
+                                                                                                    	at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1521)
+                                                                                                    	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:4262)
+                                                                                                    	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:4467) 
+                                                                                                    	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:222) 
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:133) 
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:103) 
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:80) 
+                                                                                                    	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2823) 
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:110) 
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:248) 
+                                                                                                    	at android.os.Looper.loop(Looper.java:338) 
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:9067) 
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method) 
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593) 
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932) 
+2025-06-09 20:06:09.139 25816-25816 TransactionExecutor     pid-25816                            E  Failed to execute the transaction: tId:1657747032 ClientTransaction{
+                                                                                                    tId:1657747032   transactionItems=[
+                                                                                                    tId:1657747032     LaunchActivityItem{activityToken=android.os.BinderProxy@6b71259,intent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10000000 xflg=0x4 cmp=com.example.calendario/.MainActivity },ident=19672279,info=ActivityInfo{7376189 com.example.calendario.MainActivity},curConfig={1.0 310mcc260mnc [en_US] ldltr sw384dp w384dp h640dp 320dpi nrml long port finger qwerty/v/v dpad/v winConfig={ mBounds=Rect(0, 0 - 768, 1280) mAppBounds=Rect(0, 0 - 768, 1280) mMaxBounds=Rect(0, 0 - 768, 1280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.176 fontWeightAdjustment=0},overrideConfig={1.0 310mcc260mnc [en_US] ldltr sw384dp w384dp h640dp 320dpi nrml long port finger qwerty/v/v dpad/v winConfig={ mBounds=Rect(0, 0 - 768, 1280) mAppBounds=Rect(0, 0 - 768, 1280) mMaxBounds=Rect(0, 0 - 768, 1280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.2 fontWeightAdjustment=0},deviceId=0,referrer=com.android.shell,procState=2,state=null,persistentState=null,pendingResults=null,pendingNewIntents=null,sceneTransitionInfo=null,profilerInfo=null,assistToken=android.os.BinderProxy@6852742,shareableActivityToken=android.os.BinderProxy@7b40353,activityWindowInfo=ActivityWindowInfo{isEmbedded=false, taskBounds=Rect(0, 0 - 768, 1280), taskFragmentBounds=Rect(0, 0 - 768, 1280)}}
+                                                                                                    tId:1657747032     ResumeActivityItem{mActivityToken=android.os.BinderProxy@6b71259,procState=-1,isForward=true,shouldSendCompatFakeFocus=false}
+                                                                                                    tId:1657747032     Target activity: com.example.calendario.MainActivity
+                                                                                                    tId:1657747032   ]
+                                                                                                    tId:1657747032 }
+2025-06-09 20:06:09.144 25816-25816 AndroidRuntime          pid-25816                            E  FATAL EXCEPTION: main
+                                                                                                    Process: com.example.calendario, PID: 25816
+                                                                                                    java.lang.RuntimeException: Unable to start activity ComponentInfo{com.example.calendario/com.example.calendario.MainActivity}: java.lang.ClassCastException: android.widget.CalendarView cannot be cast to com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                                                                                                    	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:4280)
+                                                                                                    	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:4467)
+                                                                                                    	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:222)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:133)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:103)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:80)
+                                                                                                    	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2823)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:110)
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:248)
+                                                                                                    	at android.os.Looper.loop(Looper.java:338)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:9067)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+                                                                                                    Caused by: java.lang.ClassCastException: android.widget.CalendarView cannot be cast to com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                                                                                                    	at com.example.calendario.MainActivity.onCreate(MainActivity.kt:28)
+                                                                                                    	at android.app.Activity.performCreate(Activity.java:9155)
+                                                                                                    	at android.app.Activity.performCreate(Activity.java:9133)
+                                                                                                    	at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1521)
+                                                                                                    	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:4262)
+                                                                                                    	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:4467) 
+                                                                                                    	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:222) 
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:133) 
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:103) 
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:80) 
+                                                                                                    	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2823) 
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:110) 
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:248) 
+                                                                                                    	at android.os.Looper.loop(Looper.java:338) 
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:9067) 
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method) 
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593) 
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932) 
+2025-06-09 20:29:54.671   752-959   InputDispatcher         system_server                        E  channel 'ea78d40 com.example.calendario/com.example.calendario.BookingActivity' ~ Channel is unrecoverably broken and will be disposed!
+2025-06-09 20:48:52.854   752-959   InputDispatcher         system_server                        E  channel 'dcdcde6 com.example.calendario/com.example.calendario.MainActivity' ~ Channel is unrecoverably broken and will be disposed!
+2025-06-09 22:38:20.791 27400-27400 mple.calendario         com.example.calendario               I  Late-enabling -Xcheck:jni
+2025-06-09 22:38:21.732 27400-27400 mple.calendario         com.example.calendario               I  Using CollectorTypeCMC GC.
+2025-06-09 22:38:21.758 27400-27400 mple.calendario         com.example.calendario               W  Unexpected CPU variant for x86: x86_64.
+                                                                                                    Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, alderlake, default
+2025-06-09 22:38:21.966 27400-27400 nativeloader            com.example.calendario               D  Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+2025-06-09 22:38:22.379 27400-27400 re-initialized>         com.example.calendario               W  type=1400 audit(0.0:27920): avc:  granted  { execute } for  path="/data/data/com.example.calendario/code_cache/startup_agents/4aa0b38c-agent.so" dev="dm-55" ino=368982 scontext=u:r:untrusted_app:s0:c218,c256,c512,c768 tcontext=u:object_r:app_data_file:s0:c218,c256,c512,c768 tclass=file app=com.example.calendario
+2025-06-09 22:38:22.413 27400-27400 nativeloader            com.example.calendario               D  Load /data/user/0/com.example.calendario/code_cache/startup_agents/4aa0b38c-agent.so using system ns (caller=<unknown>): ok
+2025-06-09 22:38:22.573 27400-27400 mple.calendario         com.example.calendario               W  hiddenapi: DexFile /data/data/com.example.calendario/code_cache/.studio/instruments-dd2db83e.jar is in boot class path but is not in a known location
+2025-06-09 22:38:22.666 27400-27400 mple.calendario         com.example.calendario               W  Redefining intrinsic method java.lang.Thread java.lang.Thread.currentThread(). This may cause the unexpected use of the original definition of java.lang.Thread java.lang.Thread.currentThread()in methods that have already been compiled.
+2025-06-09 22:38:22.666 27400-27400 mple.calendario         com.example.calendario               W  Redefining intrinsic method boolean java.lang.Thread.interrupted(). This may cause the unexpected use of the original definition of boolean java.lang.Thread.interrupted()in methods that have already been compiled.
+2025-06-09 22:38:23.591 27400-27400 nativeloader            com.example.calendario               D  Configuring clns-9 for other apk /data/app/~~K7-8dn-N5loGpF9SBcGTbw==/com.example.calendario-LMiMVTXhw0U-GsawNeMA-w==/base.apk. target_sdk_version=35, uses_libraries=, library_path=/data/app/~~K7-8dn-N5loGpF9SBcGTbw==/com.example.calendario-LMiMVTXhw0U-GsawNeMA-w==/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/com.example.calendario
+2025-06-09 22:38:23.601 27400-27400 CompatChangeReporter    com.example.calendario               D  Compat change id reported: 202956589; UID 10218; state: ENABLED
+2025-06-09 22:38:23.651 27400-27400 mple.calendario         com.example.calendario               I  AssetManager2(0x7860132a5298) locale list changing from [] to [en-US]
+2025-06-09 22:38:23.659 27400-27400 mple.calendario         com.example.calendario               I  AssetManager2(0x7860132ad5d8) locale list changing from [] to [en-US]
+2025-06-09 22:38:23.702 27400-27400 GraphicsEnvironment     com.example.calendario               V  Currently set values for:
+2025-06-09 22:38:23.702 27400-27400 GraphicsEnvironment     com.example.calendario               V    angle_gl_driver_selection_pkgs=[]
+2025-06-09 22:38:23.703 27400-27400 GraphicsEnvironment     com.example.calendario               V    angle_gl_driver_selection_values=[]
+2025-06-09 22:38:23.703 27400-27400 GraphicsEnvironment     com.example.calendario               V  com.example.calendario is not listed in per-application setting
+2025-06-09 22:38:23.705 27400-27400 GraphicsEnvironment     com.example.calendario               V  ANGLE allowlist from config: 
+2025-06-09 22:38:23.705 27400-27400 GraphicsEnvironment     com.example.calendario               V  com.example.calendario is not listed in ANGLE allowlist or settings, returning default
+2025-06-09 22:38:23.705 27400-27400 GraphicsEnvironment     com.example.calendario               V  Neither updatable production driver nor prerelease driver is supported.
+2025-06-09 22:38:23.811 27400-27400 CompatChangeReporter    com.example.calendario               D  Compat change id reported: 279646685; UID 10218; state: ENABLED
+2025-06-09 22:38:23.874 27400-27418 DisplayManager          com.example.calendario               I  Choreographer implicitly registered for the refresh rate.
+2025-06-09 22:38:23.883 27400-27400 mple.calendario         com.example.calendario               I  AssetManager2(0x7860132a9d98) locale list changing from [] to [en-US]
+2025-06-09 22:38:24.043 27400-27400 AppCompatDelegate       com.example.calendario               D  Checking for metadata for AppLocalesMetadataHolderService : Service not found
+2025-06-09 22:38:24.048 27400-27400 mple.calendario         com.example.calendario               I  AssetManager2(0x7860132a4c58) locale list changing from [] to [en-US]
+2025-06-09 22:38:24.074 27400-27418 EGL_emulation           com.example.calendario               I  Opening libGLESv1_CM_emulation.so
+2025-06-09 22:38:24.076 27400-27418 EGL_emulation           com.example.calendario               I  Opening libGLESv2_emulation.so
+2025-06-09 22:38:24.087 27400-27400 ashmem                  com.example.calendario               E  Pinning is deprecated since Android Q. Please use trim or other methods.
+2025-06-09 22:38:24.399 27400-27400 CompatChangeReporter    com.example.calendario               D  Compat change id reported: 309578419; UID 10218; state: ENABLED
+2025-06-09 22:38:24.404 27400-27400 DesktopModeFlags        com.example.calendario               D  Toggle override initialized to: OVERRIDE_UNSET
+2025-06-09 22:38:24.444 27400-27418 HWUI                    com.example.calendario               W  Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+2025-06-09 22:38:24.444 27400-27418 HWUI                    com.example.calendario               W  Failed to initialize 101010-2 format, error = EGL_SUCCESS
+2025-06-09 22:38:24.633 27400-27400 mple.calendario         com.example.calendario               I  hiddenapi: Accessing hidden method Landroid/view/ViewGroup;->makeOptionalFitsSystemWindows()V (runtime_flags=0, domain=platform, api=unsupported) from Landroidx/appcompat/widget/ViewUtils; (domain=app) using reflection: allowed
+2025-06-09 22:38:24.935 27400-27400 CompatChangeReporter    com.example.calendario               D  Compat change id reported: 63938206; UID 10218; state: ENABLED
+2025-06-09 22:38:25.136 27400-27400 System.out              com.example.calendario               I  Datas reservadas: [10/6/2025, 11/6/2025]
+2025-06-09 22:38:25.267 27400-27400 System.out              com.example.calendario               I  Datas reservadas: [10/6/2025, 11/6/2025]
+2025-06-09 22:38:25.278 27400-27400 CompatChangeReporter    com.example.calendario               D  Compat change id reported: 352594277; UID 10218; state: ENABLED
+2025-06-09 22:38:25.403 27400-27400 CompatChangeReporter    com.example.calendario               D  Compat change id reported: 349153669; UID 10218; state: ENABLED
+2025-06-09 22:38:25.417 27400-27400 HWUI                    com.example.calendario               W  Unknown dataspace 0
+2025-06-09 22:38:26.241 27400-27400 Choreographer           com.example.calendario               I  Skipped 45 frames!  The application may be doing too much work on its main thread.
+2025-06-09 22:38:26.355 27400-27411 HWUI                    com.example.calendario               I  Davey! duration=793ms; Flags=1, FrameTimelineVsyncId=816096, IntendedVsync=60527287996562, Vsync=60527287996562, InputEventId=0, HandleInputStart=60527301346500, AnimationStart=60527301398400, PerformTraversalsStart=60527301512400, DrawStart=60527822923800, FrameDeadline=60527304663228, FrameStartTime=60527301313300, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=60527883471900, SyncStart=60527884334600, IssueDrawCommandsStart=60527884499800, SwapBuffers=60528070090300, FrameCompleted=60528082080700, DequeueBufferDuration=37400, QueueBufferDuration=343800, GpuCompleted=60528082080700, SwapBuffersCompleted=60528072663700, DisplayPresentTime=0, CommandSubmissionCompleted=60528070090300, 
+2025-06-09 22:38:26.431 27400-27411 HWUI                    com.example.calendario               I  Davey! duration=783ms; Flags=0, FrameTimelineVsyncId=816118, IntendedVsync=60527321329894, Vsync=60528071329864, InputEventId=0, HandleInputStart=60528077365200, AnimationStart=60528077443600, PerformTraversalsStart=60528078088500, DrawStart=60528078353500, FrameDeadline=60528104663196, FrameStartTime=60528074883900, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=60528079571400, SyncStart=60528079744600, IssueDrawCommandsStart=60528079840300, SwapBuffers=60528080629000, FrameCompleted=60528104975200, DequeueBufferDuration=100400, QueueBufferDuration=402500, GpuCompleted=60528104975200, SwapBuffersCompleted=60528082431100, DisplayPresentTime=0, CommandSubmissionCompleted=60528080629000, 
+2025-06-09 22:38:26.520 27400-27400 InsetsController        com.example.calendario               D  hide(ime(), fromIme=false)
+2025-06-09 22:38:26.523 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:41e6f2aa: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+2025-06-09 22:38:27.022 27400-27406 mple.calendario         com.example.calendario               I  Compiler allocated 5042KB to compile void android.view.ViewRootImpl.performTraversals()
+2025-06-09 22:38:29.817 27400-27429 ProfileInstaller        com.example.calendario               D  Installing profile for com.example.calendario
+2025-06-09 22:38:33.682 27400-27400 AutofillManager         com.example.calendario               D  Fill dialog is enabled:false, hints=[]
+2025-06-09 22:38:33.689 27400-27400 CompatChangeReporter    com.example.calendario               D  Compat change id reported: 303326708; UID 10218; state: ENABLED
+2025-06-09 22:38:33.768 27400-27407 mple.calendario         com.example.calendario               I  Background concurrent mark compact GC freed 4226KB AllocSpace bytes, 0(0B) LOS objects, 49% free, 3658KB/7315KB, paused 1.915ms,2.848ms total 112.315ms
+2025-06-09 22:38:33.835 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:38:33.837 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:38:34.186 27400-27400 InsetsController        com.example.calendario               D  hide(ime(), fromIme=false)
+2025-06-09 22:38:34.190 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:f7f2368c: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+2025-06-09 22:38:34.498 27400-27400 VRI[MainActivity]       com.example.calendario               D  visibilityChanged oldVisibility=true newVisibility=false
+2025-06-09 22:38:36.489 27400-27400 ViewRootImpl            com.example.calendario               D  Skipping stats log for color mode
+2025-06-09 22:38:36.493 27400-27400 System.out              com.example.calendario               I  Datas reservadas: [10/6/2025, 11/6/2025]
+2025-06-09 22:38:36.704 27400-27400 InsetsController        com.example.calendario               D  hide(ime(), fromIme=false)
+2025-06-09 22:38:36.704 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:bd49fa80: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+2025-06-09 22:38:37.129 27400-27400 VRI[BookingActivity]    com.example.calendario               D  visibilityChanged oldVisibility=true newVisibility=false
+2025-06-09 22:38:37.140 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:38:37.152 27400-27400 WindowOnBackDispatcher  com.example.calendario               W  sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda13@9e261b7
+2025-06-09 22:38:37.154 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:38:37.160 27400-27400 ViewRootImpl            com.example.calendario               D  Skipping stats log for color mode
+2025-06-09 22:38:39.586 27400-27400 mple.calendario         com.example.calendario               I  AssetManager2(0x7860132b4978) locale list changing from [] to [en-US]
+2025-06-09 22:38:39.605 27400-27400 AutofillManager         com.example.calendario               D  Fill dialog is enabled:false, hints=[]
+2025-06-09 22:38:39.672 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:38:39.673 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:38:39.966 27400-27400 InsetsController        com.example.calendario               D  hide(ime(), fromIme=false)
+2025-06-09 22:38:39.967 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:337d4289: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+2025-06-09 22:38:40.261 27400-27400 VRI[MainActivity]       com.example.calendario               D  visibilityChanged oldVisibility=true newVisibility=false
+2025-06-09 22:38:40.276 27400-27418 HWUI                    com.example.calendario               D  endAllActiveAnimators on 0x7860732be950 (RippleDrawable) with handle 0x7860332e8e50
+2025-06-09 22:38:42.177 27400-27400 ViewRootImpl            com.example.calendario               D  Skipping stats log for color mode
+2025-06-09 22:38:42.186 27400-27400 System.out              com.example.calendario               I  Datas reservadas: [10/6/2025]
+2025-06-09 22:38:42.372 27400-27400 InsetsController        com.example.calendario               D  hide(ime(), fromIme=false)
+2025-06-09 22:38:42.372 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:84651745: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+2025-06-09 22:38:42.781 27400-27400 VRI[BookingActivity]    com.example.calendario               D  visibilityChanged oldVisibility=true newVisibility=false
+2025-06-09 22:38:42.791 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:38:42.800 27400-27418 HWUI                    com.example.calendario               D  endAllActiveAnimators on 0x786073312ac0 (RippleDrawable) with handle 0x7860332e7590
+2025-06-09 22:38:42.810 27400-27400 WindowOnBackDispatcher  com.example.calendario               W  sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda13@384d4f7
+2025-06-09 22:38:42.810 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:38:42.815 27400-27400 ViewRootImpl            com.example.calendario               D  Skipping stats log for color mode
+2025-06-09 22:38:47.403 27400-27400 AutofillManager         com.example.calendario               D  Fill dialog is enabled:false, hints=[]
+2025-06-09 22:38:47.531 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:38:47.531 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:38:47.573 27400-27407 mple.calendario         com.example.calendario               W  Cleared Reference was only reachable from finalizer (only reported once)
+2025-06-09 22:38:47.782 27400-27400 InsetsController        com.example.calendario               D  hide(ime(), fromIme=false)
+2025-06-09 22:38:47.782 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:4670c364: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+2025-06-09 22:38:48.115 27400-27400 VRI[MainActivity]       com.example.calendario               D  visibilityChanged oldVisibility=true newVisibility=false
+2025-06-09 22:38:55.185 27400-27400 AutofillManager         com.example.calendario               I  showAutofillDialog() return false due to improve fill dialog
+2025-06-09 22:38:55.190 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:26bf009d: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser true
+2025-06-09 22:38:55.194 27400-27400 InsetsController        com.example.calendario               D  show(ime(), fromIme=false)
+2025-06-09 22:38:55.196 27400-27400 InsetsController        com.example.calendario               D  Setting requestedVisibleTypes to -1 (was -9)
+2025-06-09 22:38:55.229 27400-27400 AssistStructure         com.example.calendario               I  Flattened final assist data: 3456 bytes, containing 1 windows, 26 views
+2025-06-09 22:38:57.271 27400-27400 AutofillManager         com.example.calendario               I  showAutofillDialog() return false due to improve fill dialog
+2025-06-09 22:38:57.278 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:33d7cad3: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser true
+2025-06-09 22:38:57.278 27400-27400 InsetsController        com.example.calendario               D  show(ime(), fromIme=false)
+2025-06-09 22:38:57.283 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:33d7cad3: onCancelled at PHASE_CLIENT_REPORT_REQUESTED_VISIBLE_TYPES
+2025-06-09 22:38:57.325 27400-27400 AutofillManager         com.example.calendario               I  showAutofillDialog() return false due to improve fill dialog
+2025-06-09 22:38:57.331 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:c156c407: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser true
+2025-06-09 22:38:57.332 27400-27400 InsetsController        com.example.calendario               D  show(ime(), fromIme=false)
+2025-06-09 22:38:57.333 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:c156c407: onCancelled at PHASE_CLIENT_REPORT_REQUESTED_VISIBLE_TYPES
+2025-06-09 22:38:57.356 27400-27400 HWUI                    com.example.calendario               W  Image decoding logging dropped!
+2025-06-09 22:38:57.360 27400-27400 HWUI                    com.example.calendario               W  Image decoding logging dropped!
+2025-06-09 22:38:57.363 27400-27400 HWUI                    com.example.calendario               W  Image decoding logging dropped!
+2025-06-09 22:38:57.398 27400-27400 RemoteInpu...ectionImpl com.example.calendario               W  commitText on inactive InputConnection
+2025-06-09 22:38:57.411 27400-27400 AssistStructure         com.example.calendario               I  Flattened final assist data: 3556 bytes, containing 2 windows, 27 views
+2025-06-09 22:38:57.425 27400-27400 AssistStructure         com.example.calendario               I  Flattened final assist data: 3556 bytes, containing 2 windows, 27 views
+2025-06-09 22:38:57.428 27400-27400 RemoteInpu...ectionImpl com.example.calendario               W  requestCursorUpdates on inactive InputConnection
+2025-06-09 22:38:57.433 27400-27452 InteractionJankMonitor  com.example.calendario               W  Initializing without READ_DEVICE_CONFIG permission. enabled=true, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=com.example.calendario
+2025-06-09 22:38:57.514 27400-27400 WindowOnBackDispatcher  com.example.calendario               W  sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@f4081e9
+2025-06-09 22:38:57.534 27400-27400 RemoteInpu...ectionImpl com.example.calendario               W  requestCursorUpdates on inactive InputConnection
+2025-06-09 22:38:57.672 27400-27400 WindowOnBackDispatcher  com.example.calendario               W  sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda13@f9cb11b
+2025-06-09 22:38:57.769 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:26bf009d: onShown
+2025-06-09 22:38:57.781 27400-27400 RemoteInpu...ectionImpl com.example.calendario               W  requestCursorUpdates on inactive InputConnection
+2025-06-09 22:38:57.800 27400-27400 WindowOnBackDispatcher  com.example.calendario               W  sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@f4081e9
+2025-06-09 22:38:58.320 27400-27400 AutofillManager         com.example.calendario               I  showAutofillDialog() return false due to improve fill dialog
+2025-06-09 22:38:58.324 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:7d9b68e: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser true
+2025-06-09 22:38:58.326 27400-27400 InsetsController        com.example.calendario               D  show(ime(), fromIme=false)
+2025-06-09 22:38:58.326 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:7d9b68e: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+2025-06-09 22:38:58.386 27400-27400 RemoteInpu...ectionImpl com.example.calendario               W  requestCursorUpdates on inactive InputConnection
+2025-06-09 22:38:58.407 27400-27400 WindowOnBackDispatcher  com.example.calendario               W  sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@f4081e9
+2025-06-09 22:38:59.347 27400-27400 AutofillManager         com.example.calendario               I  showAutofillDialog() return false due to improve fill dialog
+2025-06-09 22:38:59.348 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:494f3088: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser true
+2025-06-09 22:38:59.349 27400-27400 InsetsController        com.example.calendario               D  show(ime(), fromIme=false)
+2025-06-09 22:38:59.349 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:494f3088: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+2025-06-09 22:38:59.365 27400-27400 RemoteInpu...ectionImpl com.example.calendario               W  requestCursorUpdates on inactive InputConnection
+2025-06-09 22:38:59.378 27400-27400 WindowOnBackDispatcher  com.example.calendario               W  sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@f4081e9
+2025-06-09 22:39:00.180 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:39:00.193 27400-27400 AutofillManager         com.example.calendario               I  showAutofillDialog() return false due to improve fill dialog
+2025-06-09 22:39:00.194 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:df00dc2: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser true
+2025-06-09 22:39:00.195 27400-27400 InsetsController        com.example.calendario               D  show(ime(), fromIme=false)
+2025-06-09 22:39:00.197 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:df00dc2: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+2025-06-09 22:39:00.221 27400-27400 RemoteInpu...ectionImpl com.example.calendario               W  requestCursorUpdates on inactive InputConnection
+2025-06-09 22:39:00.237 27400-27400 WindowOnBackDispatcher  com.example.calendario               W  sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@f4081e9
+2025-06-09 22:39:01.129 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:39:01.140 27400-27400 AutofillManager         com.example.calendario               I  showAutofillDialog() return false due to improve fill dialog
+2025-06-09 22:39:01.141 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:98d7f76f: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser true
+2025-06-09 22:39:01.144 27400-27400 InsetsController        com.example.calendario               D  show(ime(), fromIme=false)
+2025-06-09 22:39:01.145 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:98d7f76f: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+2025-06-09 22:39:01.195 27400-27400 RemoteInpu...ectionImpl com.example.calendario               W  requestCursorUpdates on inactive InputConnection
+2025-06-09 22:39:01.210 27400-27400 WindowOnBackDispatcher  com.example.calendario               W  sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@f4081e9
+2025-06-09 22:39:02.617 27400-27400 ViewRootImpl            com.example.calendario               D  Skipping stats log for color mode
+2025-06-09 22:39:02.624 27400-27400 System.out              com.example.calendario               I  Datas reservadas: [10/6/2025, 12/6/2025, 11/6/2025, 13/6/2025]
+2025-06-09 22:39:02.771 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:ed84938c: onCancelled at PHASE_CLIENT_ON_CONTROLS_CHANGED
+2025-06-09 22:39:02.799 27400-27400 WindowOnBackDispatcher  com.example.calendario               W  sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@f4081e9
+2025-06-09 22:39:02.843 27400-27400 InsetsController        com.example.calendario               D  hide(ime(), fromIme=false)
+2025-06-09 22:39:02.844 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:1377c998: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+2025-06-09 22:39:02.875 27400-27400 RemoteInpu...ectionImpl com.example.calendario               W  requestCursorUpdates on inactive InputConnection
+2025-06-09 22:39:02.900 27400-27400 ImeTracker              com.example.calendario               I  system_server:2b317c8a: onCancelled at PHASE_CLIENT_ON_CONTROLS_CHANGED
+2025-06-09 22:39:02.905 27400-27400 WindowOnBackDispatcher  com.example.calendario               W  sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@f4f5006
+2025-06-09 22:39:03.077 27400-27400 WindowOnBackDispatcher  com.example.calendario               W  sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@f4f5006
+2025-06-09 22:39:03.228 27400-27400 VRI[BookingActivity]    com.example.calendario               D  visibilityChanged oldVisibility=true newVisibility=false
+2025-06-09 22:39:03.240 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:39:03.249 27400-27418 HWUI                    com.example.calendario               D  endAllActiveAnimators on 0x7860733394c0 (RippleDrawable) with handle 0x7860332f2e10
+2025-06-09 22:39:03.257 27400-27400 AutofillManager         com.example.calendario               I  onInvisibleForAutofill(): expiringResponse
+2025-06-09 22:39:03.258 27400-27400 AutofillManager         com.example.calendario               D  onActivityFinishing(): calling cancelLocked()
+2025-06-09 22:39:03.260 27400-27400 WindowOnBackDispatcher  com.example.calendario               W  sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda13@5044374
+2025-06-09 22:39:03.262 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:39:03.265 27400-27400 ViewRootImpl            com.example.calendario               D  Skipping stats log for color mode
+2025-06-09 22:39:08.035 27400-27400 FrameTracker            com.example.calendario               E  force finish cuj, time out: J<IME_INSETS_SHOW_ANIMATION::0@0@com.example.calendario>
+2025-06-09 22:39:08.035 27400-27400 FrameTracker            com.example.calendario               W  Missed SF frame:JANK_COMPOSER, 822893, 9014556, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@com.example.calendario>
+2025-06-09 22:39:08.035 27400-27400 FrameTracker            com.example.calendario               W  Missed SF frame:JANK_COMPOSER, 822922, 10077290, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@com.example.calendario>
+2025-06-09 22:39:08.035 27400-27400 FrameTracker            com.example.calendario               W  Missed SF frame:JANK_COMPOSER, 822951, 24286724, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@com.example.calendario>
+2025-06-09 22:39:08.036 27400-27400 FrameTracker            com.example.calendario               W  Missed SF frame:JANK_COMPOSER, 822995, 2753492, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@com.example.calendario>
+2025-06-09 22:39:08.036 27400-27400 FrameTracker            com.example.calendario               W  Missed SF frame:JANK_COMPOSER, 823017, 4975626, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@com.example.calendario>
+2025-06-09 22:39:08.036 27400-27400 FrameTracker            com.example.calendario               W  Missed SF frame:JANK_COMPOSER, 823039, 10790260, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@com.example.calendario>
+2025-06-09 22:39:08.037 27400-27400 FrameTracker            com.example.calendario               W  Missed SF frame:JANK_COMPOSER, 823068, 18778194, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@com.example.calendario>
+2025-06-09 22:39:08.040 27400-27453 PerfettoTrigger         com.example.calendario               V  Triggering /system/bin/trigger_perfetto com.android.telemetry.interaction-jank-monitor-80
+2025-06-09 22:39:09.278 27400-27400 mple.calendario         com.example.calendario               I  AssetManager2(0x7860132baa58) locale list changing from [] to [en-US]
+2025-06-09 22:39:09.305 27400-27400 AutofillManager         com.example.calendario               D  Fill dialog is enabled:false, hints=[]
+2025-06-09 22:39:09.420 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:39:09.421 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:39:09.775 27400-27400 InsetsController        com.example.calendario               D  hide(ime(), fromIme=false)
+2025-06-09 22:39:09.789 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:53429e26: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+2025-06-09 22:39:10.048 27400-27400 VRI[MainActivity]       com.example.calendario               D  visibilityChanged oldVisibility=true newVisibility=false
+2025-06-09 22:39:11.650 27400-27400 ViewRootImpl            com.example.calendario               D  Skipping stats log for color mode
+2025-06-09 22:39:11.654 27400-27400 System.out              com.example.calendario               I  Datas reservadas: [10/6/2025, 12/6/2025, 11/6/2025]
+2025-06-09 22:39:11.838 27400-27400 InsetsController        com.example.calendario               D  hide(ime(), fromIme=false)
+2025-06-09 22:39:11.840 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:f44ec211: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+2025-06-09 22:39:12.253 27400-27400 VRI[BookingActivity]    com.example.calendario               D  visibilityChanged oldVisibility=true newVisibility=false
+2025-06-09 22:39:12.260 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:39:12.269 27400-27418 HWUI                    com.example.calendario               D  endAllActiveAnimators on 0x78607335b180 (RippleDrawable) with handle 0x7860332fba50
+2025-06-09 22:39:12.281 27400-27400 WindowOnBackDispatcher  com.example.calendario               W  sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda13@7127737
+2025-06-09 22:39:12.281 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:39:12.285 27400-27400 ViewRootImpl            com.example.calendario               D  Skipping stats log for color mode
+2025-06-09 22:39:14.553 27400-27400 AutofillManager         com.example.calendario               D  Fill dialog is enabled:false, hints=[]
+2025-06-09 22:39:14.635 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:39:14.635 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:39:14.883 27400-27400 InsetsController        com.example.calendario               D  hide(ime(), fromIme=false)
+2025-06-09 22:39:14.884 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:44f8c9e4: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+2025-06-09 22:39:15.225 27400-27400 VRI[MainActivity]       com.example.calendario               D  visibilityChanged oldVisibility=true newVisibility=false
+2025-06-09 22:39:18.601 27400-27400 System.out              com.example.calendario               I  Datas reservadas: [10/6/2025, 12/6/2025, 11/6/2025]
+2025-06-09 22:39:18.981 27400-27400 InsetsController        com.example.calendario               D  hide(ime(), fromIme=false)
+2025-06-09 22:39:18.982 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:40111aae: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+2025-06-09 22:39:19.414 27400-27400 VRI[BookingActivity]    com.example.calendario               D  visibilityChanged oldVisibility=true newVisibility=false
+2025-06-09 22:39:19.424 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:39:19.438 27400-27400 WindowOnBackDispatcher  com.example.calendario               W  sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda13@75fb6f0
+2025-06-09 22:39:19.439 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:39:19.441 27400-27400 ViewRootImpl            com.example.calendario               D  Skipping stats log for color mode
+2025-06-09 22:39:21.000 27400-27400 mple.calendario         com.example.calendario               I  AssetManager2(0x7860132c0818) locale list changing from [] to [en-US]
+2025-06-09 22:39:21.024 27400-27400 AutofillManager         com.example.calendario               D  Fill dialog is enabled:false, hints=[]
+2025-06-09 22:39:21.099 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:39:21.100 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:39:21.385 27400-27400 InsetsController        com.example.calendario               D  hide(ime(), fromIme=false)
+2025-06-09 22:39:21.386 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:fe53651f: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+2025-06-09 22:39:21.699 27400-27400 VRI[MainActivity]       com.example.calendario               D  visibilityChanged oldVisibility=true newVisibility=false
+2025-06-09 22:39:21.711 27400-27418 HWUI                    com.example.calendario               D  endAllActiveAnimators on 0x7860732be950 (RippleDrawable) with handle 0x7860332faf70
+2025-06-09 22:39:25.878 27400-27400 ViewRootImpl            com.example.calendario               D  Skipping stats log for color mode
+2025-06-09 22:39:25.881 27400-27400 System.out              com.example.calendario               I  Datas reservadas: [10/6/2025, 12/6/2025, 11/6/2025]
+2025-06-09 22:39:26.002 27400-27400 InsetsController        com.example.calendario               D  hide(ime(), fromIme=false)
+2025-06-09 22:39:26.002 27400-27400 ImeTracker              com.example.calendario               I  com.example.calendario:f0b31455: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+2025-06-09 22:39:26.430 27400-27400 VRI[BookingActivity]    com.example.calendario               D  visibilityChanged oldVisibility=true newVisibility=false
+2025-06-09 22:39:26.440 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:39:26.451 27400-27400 WindowOnBackDispatcher  com.example.calendario               W  sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda13@435e08a
+2025-06-09 22:39:26.452 27400-27400 AutofillManager         com.example.calendario               D  view not autofillable - has multiline input type
+2025-06-09 22:39:26.454 27400-27400 ViewRootImpl            com.example.calendario               D  Skipping stats log for color mode
+2025-06-09 22:39:30.622 27400-27400 VRI[MainActivity]       com.example.calendario               D  visibilityChanged oldVisibility=true newVisibility=false
+2025-06-09 22:39:30.675 27400-27400 WindowOnBackDispatcher  com.example.calendario               W  sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda13@315827c
+2025-06-09 22:39:30.677 27400-27400 ViewRootImpl            com.example.calendario               D  Skipping stats log for color mode
+---------------------------- PROCESS STARTED (28136) for package com.example.calendario ----------------------------
+2025-06-09 23:56:46.279 28136-28136 nativeloader            com.example.calendario               D  Configuring clns-9 for other apk /data/app/~~TrAkhYoHLIMwpyv6ihYkAg==/com.example.calendario-VlcgqE7vvLZuG4mpeZneJQ==/base.apk. target_sdk_version=35, uses_libraries=, library_path=/data/app/~~TrAkhYoHLIMwpyv6ihYkAg==/com.example.calendario-VlcgqE7vvLZuG4mpeZneJQ==/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/com.example.calendario
+2025-06-09 23:56:46.305 28136-28136 CompatChangeReporter    com.example.calendario               D  Compat change id reported: 202956589; UID 10218; state: ENABLED
+2025-06-09 23:56:46.335 28136-28136 mple.calendario         com.example.calendario               I  AssetManager2(0x7860132a5298) locale list changing from [] to [en-US]
+2025-06-09 23:56:46.505 28136-28136 GraphicsEnvironment     com.example.calendario               V  Currently set values for:
+2025-06-09 23:56:46.505 28136-28136 GraphicsEnvironment     com.example.calendario               V    angle_gl_driver_selection_pkgs=[]
+2025-06-09 23:56:46.506 28136-28136 GraphicsEnvironment     com.example.calendario               V    angle_gl_driver_selection_values=[]
+2025-06-09 23:56:46.506 28136-28136 GraphicsEnvironment     com.example.calendario               V  com.example.calendario is not listed in per-application setting
+2025-06-09 23:56:46.509 28136-28136 GraphicsEnvironment     com.example.calendario               V  ANGLE allowlist from config: 
+2025-06-09 23:56:46.509 28136-28136 GraphicsEnvironment     com.example.calendario               V  com.example.calendario is not listed in ANGLE allowlist or settings, returning default
+2025-06-09 23:56:46.510 28136-28136 GraphicsEnvironment     com.example.calendario               V  Neither updatable production driver nor prerelease driver is supported.
+2025-06-09 23:56:46.747 28136-28136 CompatChangeReporter    com.example.calendario               D  Compat change id reported: 279646685; UID 10218; state: ENABLED
+2025-06-09 23:56:46.857 28136-28152 DisplayManager          com.example.calendario               I  Choreographer implicitly registered for the refresh rate.
+2025-06-09 23:56:46.871 28136-28136 mple.calendario         com.example.calendario               I  AssetManager2(0x7860132aa3d8) locale list changing from [] to [en-US]
+2025-06-09 23:56:47.030 28136-28136 AppCompatDelegate       com.example.calendario               D  Checking for metadata for AppLocalesMetadataHolderService : Service not found
+2025-06-09 23:56:47.033 28136-28136 mple.calendario         com.example.calendario               I  AssetManager2(0x7860132a4c58) locale list changing from [] to [en-US]
+2025-06-09 23:56:47.063 28136-28136 ashmem                  com.example.calendario               E  Pinning is deprecated since Android Q. Please use trim or other methods.
+2025-06-09 23:56:47.186 28136-28152 EGL_emulation           com.example.calendario               I  Opening libGLESv1_CM_emulation.so
+2025-06-09 23:56:47.201 28136-28152 EGL_emulation           com.example.calendario               I  Opening libGLESv2_emulation.so
+2025-06-09 23:56:47.282 28136-28136 CompatChangeReporter    com.example.calendario               D  Compat change id reported: 309578419; UID 10218; state: ENABLED
+2025-06-09 23:56:47.287 28136-28136 DesktopModeFlags        com.example.calendario               D  Toggle override initialized to: OVERRIDE_UNSET
+2025-06-09 23:56:47.422 28136-28152 HWUI                    com.example.calendario               W  Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+2025-06-09 23:56:47.423 28136-28152 HWUI                    com.example.calendario               W  Failed to initialize 101010-2 format, error = EGL_SUCCESS
+2025-06-09 23:56:47.455 28136-28136 mple.calendario         com.example.calendario               I  hiddenapi: Accessing hidden method Landroid/view/ViewGroup;->makeOptionalFitsSystemWindows()V (runtime_flags=0, domain=platform, api=unsupported) from Landroidx/appcompat/widget/ViewUtils; (domain=app) using reflection: allowed
+2025-06-09 23:56:47.571 28136-28136 mple.calendario         com.example.calendario               W  Verification of void com.prolificinteractive.materialcalendarview.MaterialCalendarView.<init>(android.content.Context, android.util.AttributeSet) took 103.886ms (5149.85 bytecodes/s) (0B arena alloc)
+2025-06-09 23:56:47.726 28136-28136 TransactionExecutor     com.example.calendario               E  Failed to execute the transaction: tId:-116383930 ClientTransaction{
+                                                                                                    tId:-116383930   transactionItems=[
+                                                                                                    tId:-116383930     LaunchActivityItem{activityToken=android.os.BinderProxy@6b71259,intent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10000000 xflg=0x4 cmp=com.example.calendario/.MainActivity },ident=62298310,info=ActivityInfo{2a24e71 com.example.calendario.MainActivity},curConfig={1.0 310mcc260mnc [en_US] ldltr sw384dp w384dp h640dp 320dpi nrml long port finger qwerty/v/v dpad/v winConfig={ mBounds=Rect(0, 0 - 768, 1280) mAppBounds=Rect(0, 0 - 768, 1280) mMaxBounds=Rect(0, 0 - 768, 1280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.182 fontWeightAdjustment=0},overrideConfig={1.0 310mcc260mnc [en_US] ldltr sw384dp w384dp h640dp 320dpi nrml long port finger qwerty/v/v dpad/v winConfig={ mBounds=Rect(0, 0 - 768, 1280) mAppBounds=Rect(0, 0 - 768, 1280) mMaxBounds=Rect(0, 0 - 768, 1280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.2 fontWeightAdjustment=0},deviceId=0,referrer=com.android.shell,procState=2,state=null,persistentState=null,pendingResults=null,pendingNewIntents=null,sceneTransitionInfo=null,profilerInfo=null,assistToken=android.os.BinderProxy@4fdd98a,shareableActivityToken=android.os.BinderProxy@319dbfb,activityWindowInfo=ActivityWindowInfo{isEmbedded=false, taskBounds=Rect(0, 0 - 768, 1280), taskFragmentBounds=Rect(0, 0 - 768, 1280)}}
+                                                                                                    tId:-116383930     ResumeActivityItem{mActivityToken=android.os.BinderProxy@6b71259,procState=-1,isForward=true,shouldSendCompatFakeFocus=false}
+                                                                                                    tId:-116383930     Target activity: com.example.calendario.MainActivity
+                                                                                                    tId:-116383930   ]
+                                                                                                    tId:-116383930 }
+2025-06-09 23:56:47.730 28136-28136 AndroidRuntime          com.example.calendario               D  Shutting down VM
+2025-06-09 23:56:47.743 28136-28136 AndroidRuntime          com.example.calendario               E  FATAL EXCEPTION: main
+                                                                                                    Process: com.example.calendario, PID: 28136
+                                                                                                    java.lang.RuntimeException: Unable to start activity ComponentInfo{com.example.calendario/com.example.calendario.MainActivity}: android.view.InflateException: Binary XML file line #14 in com.example.calendario:layout/activity_main: Binary XML file line #14 in com.example.calendario:layout/activity_main: Error inflating class com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                                                                                                    	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:4280)
+                                                                                                    	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:4467)
+                                                                                                    	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:222)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:133)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:103)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:80)
+                                                                                                    	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2823)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:110)
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:248)
+                                                                                                    	at android.os.Looper.loop(Looper.java:338)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:9067)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+                                                                                                    Caused by: android.view.InflateException: Binary XML file line #14 in com.example.calendario:layout/activity_main: Binary XML file line #14 in com.example.calendario:layout/activity_main: Error inflating class com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                                                                                                    Caused by: android.view.InflateException: Binary XML file line #14 in com.example.calendario:layout/activity_main: Error inflating class com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                                                                                                    Caused by: java.lang.reflect.InvocationTargetException
+                                                                                                    	at java.lang.reflect.Constructor.newInstance0(Native Method)
+                                                                                                    	at java.lang.reflect.Constructor.newInstance(Constructor.java:343)
+                                                                                                    	at android.view.LayoutInflater.createView(LayoutInflater.java:743)
+                                                                                                    	at android.view.LayoutInflater.createViewFromTag(LayoutInflater.java:895)
+                                                                                                    	at android.view.LayoutInflater.createViewFromTag(LayoutInflater.java:850)
+                                                                                                    	at android.view.LayoutInflater.rInflate(LayoutInflater.java:1012)
+                                                                                                    	at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:973)
+                                                                                                    	at android.view.LayoutInflater.inflate(LayoutInflater.java:571)
+                                                                                                    	at android.view.LayoutInflater.inflate(LayoutInflater.java:462)
+                                                                                                    	at android.view.LayoutInflater.inflate(LayoutInflater.java:413)
+                                                                                                    	at androidx.appcompat.app.AppCompatDelegateImpl.setContentView(AppCompatDelegateImpl.java:751)
+                                                                                                    	at androidx.appcompat.app.AppCompatActivity.setContentView(AppCompatActivity.java:193)
+                                                                                                    	at com.example.calendario.MainActivity.onCreate(MainActivity.kt:34)
+                                                                                                    	at android.app.Activity.performCreate(Activity.java:9155)
+                                                                                                    	at android.app.Activity.performCreate(Activity.java:9133)
+                                                                                                    	at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1521)
+                                                                                                    	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:4262)
+                                                                                                    	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:4467)
+                                                                                                    	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:222)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:133)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:103)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:80)
+                                                                                                    	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2823)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:110)
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:248)
+                                                                                                    	at android.os.Looper.loop(Looper.java:338)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:9067)
+2025-06-09 23:56:47.750 28136-28136 AndroidRuntime          com.example.calendario               E  	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+                                                                                                    Caused by: java.lang.NoClassDefFoundError: Failed resolution of: Landroid/support/v4/view/ViewPager$OnPageChangeListener;
+                                                                                                    	... 30 more
+                                                                                                    Caused by: java.lang.ClassNotFoundException: Didn't find class "android.support.v4.view.ViewPager$OnPageChangeListener" on path: DexPathList[[zip file "/data/app/~~TrAkhYoHLIMwpyv6ihYkAg==/com.example.calendario-VlcgqE7vvLZuG4mpeZneJQ==/base.apk"],nativeLibraryDirectories=[/data/app/~~TrAkhYoHLIMwpyv6ihYkAg==/com.example.calendario-VlcgqE7vvLZuG4mpeZneJQ==/lib/x86_64, /system/lib64, /system_ext/lib64]]
+                                                                                                    	at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:259)
+                                                                                                    	at java.lang.ClassLoader.loadClass(ClassLoader.java:637)
+                                                                                                    	at java.lang.ClassLoader.loadClass(ClassLoader.java:573)
+                                                                                                    	... 30 more
+2025-06-09 23:56:47.831 28136-28136 Process                 com.example.calendario               I  Sending signal. PID: 28136 SIG: 9
+---------------------------- PROCESS ENDED (28136) for package com.example.calendario ----------------------------

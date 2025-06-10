@@ -37,8 +37,10 @@ android {
 
 dependencies {
 
-    // MANTENHA esta linha, que usa o Version Catalog e está correta:
-    implementation(libs.material.calendarview) // Sem as exclusões
+    implementation(libs.material.calendarview) { // Adicione um bloco de configuração aqui
+        exclude(group = "com.android.support", module = "support-compat")
+        exclude(group = "com.android.support", module = "support-v4") // Também é bom excluir support-v4 por precaução
+    }
 
     // As outras dependências já estavam corretas:
     implementation(libs.androidx.core.ktx)
